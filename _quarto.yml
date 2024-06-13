@@ -1,0 +1,79 @@
+project:
+  type: book
+  output-dir: TEXTBOOK
+  
+  
+book:
+  title: "DP4SS"
+  output-file: "DP4SS"
+  author: 
+    - "Jesse Lecy"
+    - "Jamison Crawford"
+  date: last-modified
+  sidebar: 
+    style: "docked" 
+  chapters: 
+    - index.qmd 
+    
+    - part: 0_00-ds-toolkit.qmd 
+      chapters: 
+      - 0_10-core-r.qmd 
+      - 0_20-rstudio.qmd 
+      - 0_30-data-driven-docs.qmd
+      - 0_31-markdown.qmd 
+      
+    - part: "Getting Started"  
+      chapters: 
+      - 1_00-learning-r.qmd
+      - 1_10-getting-help.qmd
+      
+    - part: "The Fundamentals"  
+      chapters: 
+      - 2_10-calculator.qmd 
+      - 2_20-functions.qmd
+      - 2_30-assignment.qmd
+      - 3_10-data-types.qmd
+      - 3_20-data-exploration.qmd
+      - 3_21-summary-stats.qmd
+      # - 3_30-logical-vectors.qmd
+
+    - part: "Data IO"  
+      chapters: 
+      - 2_40-importing-data.qmd
+      - 2_50-saving-objects.qmd
+      
+    - part: "Data Wrangling"
+      chapters: 
+      - 4_10-data-verbs.qmd
+      - 4_20-data-recipes.qmd 
+      - 4_30-data-joins-core.qmd 
+      - 4_40-data-joins-dplyr.qmd 
+      - 5_10-constructing-groups.qmd 
+      - 5_20-group-structure.qmd
+      
+    - part: 6_10-intro-to-data-viz.qmd
+      chapters: 
+      - 6_20-plot-basics.qmd
+      - 6_30-customized-graphics.qmd
+      - 6_31-xkcd-stickfigures.qmd
+      - 6_40-ggplot2.qmd 
+
+format:
+  html:
+    theme: lux
+    highlight-style: solarized
+    css: www/textbook.css
+    code-overflow: wrap
+    grid:
+      sidebar-width: 250px
+      body-width: 1000px
+      margin-width: 150px
+      gutter-width: 1.5em
+  # pdf:
+  #  documentclass: report
+
+editor: visual
+
+
+
+

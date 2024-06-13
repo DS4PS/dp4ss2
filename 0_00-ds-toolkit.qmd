@@ -1,0 +1,7 @@
+# Your Data Science Toolkit {.unnumbered}
+
+This section introduces the three tools you will need to create data science projects: 
+
+(1) A data programming language (R)
+(2) A project "environment" (R Studio)
+(3) Data-driven documents (R Markdown)
