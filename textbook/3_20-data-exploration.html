@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>DP4SS - 11&nbsp; Exploring Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./3_21-summary-stats.html" rel="next">
+<link href="./3_10-data-types.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="www/textbook.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_10-calculator.html">The Fundamentals</a></li><li class="breadcrumb-item"><a href="./3_20-data-exploration.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Exploring Data</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">DP4SS</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">The Data Science Toolkit</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_10-core-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The <strong>R</strong> Language</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_20-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Studio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_30-data-driven-docs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data-Driven Docs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_31-markdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markdown Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Getting Started</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_00-learning-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Learning to Program</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_10-getting-help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Getting Help</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">The Fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_10-calculator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">R: An Overdesigned Calculator</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_20-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_30-assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Assignment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_10-data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Vectors and Data Types</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_20-data-exploration.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Exploring Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_21-summary-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Descriptive Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Data IO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_40-importing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Getting Data into R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_50-saving-objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Saving Data to File</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Data Wrangling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_10-data-verbs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Data Verbs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_20-data-recipes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Data Recipes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_30-data-joins-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Data Joins</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_40-data-joins-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Data Joins With dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_10-constructing-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Constructing Groups</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_20-group-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Efficient Use of Group Structure</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./6_10-intro-to-data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Data Viz</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_20-plot-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">The plot() Function</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_30-customized-graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Customizing Plots</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_31-xkcd-stickfigures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Stylized Plot Example</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_40-ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">The Grammar of Graphics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link active" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">11.4</span> Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#common-initial-analysis-techniques" id="toc-common-initial-analysis-techniques" class="nav-link" data-scroll-target="#common-initial-analysis-techniques"><span class="header-section-number">11.4.1</span> Common Initial Analysis Techniques</a></li>
+  <li><a href="#techniques-for-tallies-proportions" id="toc-techniques-for-tallies-proportions" class="nav-link" data-scroll-target="#techniques-for-tallies-proportions"><span class="header-section-number">11.4.2</span> Techniques for Tallies &amp; Proportions</a></li>
+  <li><a href="#initial-analysis-techniques-from-packages" id="toc-initial-analysis-techniques-from-packages" class="nav-link" data-scroll-target="#initial-analysis-techniques-from-packages"><span class="header-section-number">11.4.3</span> Initial Analysis Techniques from Packages</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-visualization" id="toc-exploratory-data-visualization" class="nav-link" data-scroll-target="#exploratory-data-visualization"><span class="header-section-number">11.5</span> Exploratory Data Visualization</a>
+  <ul class="collapse">
+  <li><a href="#common-exploratory-visualization-techniques" id="toc-common-exploratory-visualization-techniques" class="nav-link" data-scroll-target="#common-exploratory-visualization-techniques"><span class="header-section-number">11.5.1</span> Common Exploratory Visualization Techniques</a></li>
+  </ul></li>
+  <li><a href="#descriptive-statistics" id="toc-descriptive-statistics" class="nav-link" data-scroll-target="#descriptive-statistics"><span class="header-section-number">11.6</span> Descriptive Statistics</a>
+  <ul class="collapse">
+  <li><a href="#common-functions-for-descriptive-statistics" id="toc-common-functions-for-descriptive-statistics" class="nav-link" data-scroll-target="#common-functions-for-descriptive-statistics"><span class="header-section-number">11.6.1</span> Common Functions for Descriptive Statistics</a></li>
+  </ul></li>
+  <li><a href="#warning-summary-statistics-missing-values" id="toc-warning-summary-statistics-missing-values" class="nav-link" data-scroll-target="#warning-summary-statistics-missing-values"><span class="header-section-number">11.7</span> WARNING: SUMMARY STATISTICS &amp; MISSING VALUES</a></li>
+  <li><a href="#tabulating-descriptive-statistics" id="toc-tabulating-descriptive-statistics" class="nav-link" data-scroll-target="#tabulating-descriptive-statistics"><span class="header-section-number">11.7.1</span> Tabulating Descriptive Statistics</a></li>
+  <li><a href="#group-wise-summaries-in-base-r" id="toc-group-wise-summaries-in-base-r" class="nav-link" data-scroll-target="#group-wise-summaries-in-base-r"><span class="header-section-number">11.8</span> Group-Wise Summaries in Base R</a>
+  <ul class="collapse">
+  <li><a href="#tabulating-contingency-tables" id="toc-tabulating-contingency-tables" class="nav-link" data-scroll-target="#tabulating-contingency-tables"><span class="header-section-number">11.8.1</span> Tabulating Contingency Tables</a></li>
+  <li><a href="#contingency-tables-group-wise-frequencies" id="toc-contingency-tables-group-wise-frequencies" class="nav-link" data-scroll-target="#contingency-tables-group-wise-frequencies"><span class="header-section-number">11.8.2</span> Contingency Tables &amp; Group-Wise Frequencies</a></li>
+  <li><a href="#apply-functions-group-wise-operations" id="toc-apply-functions-group-wise-operations" class="nav-link" data-scroll-target="#apply-functions-group-wise-operations"><span class="header-section-number">11.8.3</span> Apply Functions &amp; Group-Wise Operations</a></li>
+  <li><a href="#aggregation-group-wise-operations" id="toc-aggregation-group-wise-operations" class="nav-link" data-scroll-target="#aggregation-group-wise-operations"><span class="header-section-number">11.8.4</span> Aggregation &amp; Group-Wise Operations</a></li>
+  </ul></li>
+  <li><a href="#group-wise-operations-with-dplyr" id="toc-group-wise-operations-with-dplyr" class="nav-link" data-scroll-target="#group-wise-operations-with-dplyr"><span class="header-section-number">11.9</span> Group-Wise Operations with dplyr</a>
+  <ul class="collapse">
+  <li><a href="#package-dplyr-syntax" id="toc-package-dplyr-syntax" class="nav-link" data-scroll-target="#package-dplyr-syntax"><span class="header-section-number">11.9.1</span> Package dplyr Syntax</a></li>
+  <li><a href="#grouping-by-variables" id="toc-grouping-by-variables" class="nav-link" data-scroll-target="#grouping-by-variables"><span class="header-section-number">11.9.2</span> Grouping by Variables</a></li>
+  <li><a href="#group-by-summarize-operations" id="toc-group-by-summarize-operations" class="nav-link" data-scroll-target="#group-by-summarize-operations"><span class="header-section-number">11.9.3</span> Group By-Summarize Operations</a></li>
+  </ul></li>
+  <li><a href="#further-resources" id="toc-further-resources" class="nav-link" data-scroll-target="#further-resources"><span class="header-section-number">11.10</span> Further Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_10-calculator.html">The Fundamentals</a></li><li class="breadcrumb-item"><a href="./3_20-data-exploration.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Exploring Data</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Exploring Data</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><br> <br></p>
+<div class="tip">
+<section id="key-concepts" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">11.1</span> Key Concepts</h2>
+<p>In this chapter, we’ll explore the following key concepts and functions:</p>
+<ul>
+<li>Exploratory Data Analysis (EDA) &amp; Initial Data Analysis (IDA)
+<ul>
+<li><code>str()</code></li>
+<li><code>nrow()</code></li>
+<li><code>ncol()</code></li>
+<li><code>dim()</code></li>
+<li><code>length()</code></li>
+<li><code>rownames()</code></li>
+<li><code>colnames()</code></li>
+<li><code>names()</code></li>
+<li><code>class()</code></li>
+<li><code>levels()</code></li>
+<li><code>head()</code></li>
+<li><code>tail()</code></li>
+<li><code>summary()</code></li>
+<li><code>View()</code></li>
+<li><code>?</code> &amp; <code>help()</code></li>
+<li><code>Desc()</code></li>
+<li><code>glimpse()</code></li>
+</ul></li>
+<li>Contingency Tables for Frequency &amp; Proportionality
+<ul>
+<li><code>table()</code></li>
+<li><code>prop.table()</code></li>
+<li><code>ftable()</code></li>
+</ul></li>
+<li>Exploratory Data Visualization (EDV)
+<ul>
+<li><code>hist()</code></li>
+<li><code>boxplot()</code></li>
+<li><code>plot()</code></li>
+<li><code>pairs()</code></li>
+<li><code>par()</code></li>
+<li><code>ggpairs()</code> (<strong>GGally</strong>)</li>
+</ul></li>
+<li>Functions for Descriptive Stats:
+<ul>
+<li><code>mean()</code></li>
+<li><code>median()</code></li>
+<li><code>min()</code></li>
+<li><code>max()</code></li>
+<li><code>var()</code></li>
+<li><code>quantile()</code></li>
+</ul></li>
+<li>Tabulating Summary Output</li>
+<li>Grouping &amp; Summary Operations with <strong>dplyr</strong>
+<ul>
+<li><code>%&gt;%</code></li>
+<li><code>filter()</code></li>
+<li><code>select()</code></li>
+<li><code>group_by()</code></li>
+<li><code>summarize()</code></li>
+<li><code>ungroup()</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="new-packages" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="new-packages"><span class="header-section-number">11.2</span> New Packages</h2>
+<p>This chapter uses the following packages (in order of appearance):</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/DescTools/index.html">DescTools</a></li>
+<li><a href="https://cran.r-project.org/web/packages/GGally/index.html">GGally</a></li>
+<li><a href="https://cran.r-project.org/web/packages/dplyr/index.html">dplyr</a></li>
+</ul>
+</section>
+<section id="key-takeaways" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">11.3</span> Key Takeaways</h2>
+<p>Too long; didn’t read? Here’s what you need to know:</p>
+<ul>
+<li>Initial and Exploratory Data Analysis (IDA; EDA) are key to exploring new data
+<ul>
+<li>Key functions: <code>str()</code> for structure, <code>summary()</code> for descriptive stats</li>
+</ul></li>
+<li>Exploratory Data Visualization (EDV) is critical for exploratory analysis
+<ul>
+<li>Key functions: <code>plot()</code>, <code>hist()</code>, <code>boxplot()</code>, <code>pairs()</code></li>
+</ul></li>
+<li>Descriptive statistics functions describe quantitative data
+<ul>
+<li>Key functions: <code>mean()</code>, <code>median()</code>, <code>min()</code>, <code>max()</code></li>
+</ul></li>
+<li>Package <strong>dplyr</strong> makes it easy to summarize grouped variables
+<ul>
+<li>Key functions: <code>%&gt;%</code> pipes data, <code>group_by()</code>, <code>summarize()</code></li>
+<li>Example: <code>data %&gt;% group_by(variable) %&gt;% summarize(count = n())</code></li>
+<li>Don’t forget to use <code>ungroup()</code></li>
+</ul></li>
+</ul>
+<p><br> <br> <br></p>
+</section>
+</div>
+<p><br> <br></p>
+<section id="exploratory-data-analysis" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">11.4</span> Exploratory Data Analysis</h2>
+<p><strong>Exploratory Data Analysis</strong> (<strong>EDA</strong>) is the implementation of exploratory techniques to better understand <em>new data</em>. Typically, <strong>EDA</strong> uses visualizing and summarizing functions to detect patterns and anomalies in data beyond initial hypotheses and research questions.</p>
+<p><br></p>
+<p><strong>Practice Data:</strong> To demonstrate, we’ll use <a href="https://data.ny.gov/Recreation/State-Park-Annual-Attendance-Figures-by-Facility-B/8f3n-xj78">state park annual attendance</a> from the State of New York’s <em>Office for Parks, Recreation, and Historic Preservation</em> (OPRHP).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://data.ny.gov/api/views/8f3n"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"-xj78/rows.csv?accessType=DOWNLOAD"</span>)   <span class="co"># Assign URL: "url"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>parks <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(url)                                <span class="co"># Read in data: "parks"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> <br></p>
+<section id="common-initial-analysis-techniques" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="common-initial-analysis-techniques"><span class="header-section-number">11.4.1</span> Common Initial Analysis Techniques</h3>
+<p><strong>Base R</strong> has a litany of functions commonly used in <strong>Initial Data Analysis</strong>, or <strong>IDA</strong>.</p>
+<ul>
+<li><strong>IDA</strong> is the opening salvo of functions in <strong>Exploratory Data Analysis</strong>.</li>
+<li><strong>IDA</strong> techniques aid in understanding the nuances of your data.</li>
+</ul>
+<p><br></p>
+<p><strong>Data Structure:</strong> Function <code>str()</code> is a go-to function for understanding:</p>
+<ul>
+<li>The <em>class</em> of the dataset, e.g.&nbsp;<strong>matrix</strong> or <strong>data.frame</strong></li>
+<li>The <em>dimensions</em> of a dataset (rows and columns)</li>
+<li>The <em>class</em> of each variable in the dataset</li>
+<li>The first several values of each variable</li>
+<li>The <strong>levels</strong> in each <strong>factor</strong> variable</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(parks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Classes 'spec_tbl_df', 'tbl_df', 'tbl' and 'data.frame':    5007 obs. of  5 variables:
+ $ Year        : num  2023 2023 2023 2023 2023 ...
+ $ OPRHP Region: chr  "Allegany" "Allegany" "Allegany" "Allegany" ...
+ $ County      : chr  "Cattaraugus" "Cattaraugus" "Chautauqua" "Chautauqua" ...
+ $ Facility    : chr  "Allegany Quaker Area" "Allegany Red House Area" "Barcelona Lighthouse" "Lake Erie St Pk" ...
+ $ Attendance  : num  792323 707529 18019 91967 152695 ...
+ - attr(*, "spec")=List of 3
+  ..$ cols   :List of 5
+  .. ..$ Year        : list()
+  .. .. ..- attr(*, "class")= chr [1:2] "collector_double" "collector"
+  .. ..$ OPRHP Region: list()
+  .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"
+  .. ..$ County      : list()
+  .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"
+  .. ..$ Facility    : list()
+  .. .. ..- attr(*, "class")= chr [1:2] "collector_character" "collector"
+  .. ..$ Attendance  : list()
+  .. .. ..- attr(*, "class")= chr [1:2] "collector_double" "collector"
+  ..$ default: list()
+  .. ..- attr(*, "class")= chr [1:2] "collector_guess" "collector"
+  ..$ delim  : chr ","
+  ..- attr(*, "class")= chr "col_spec"
+ - attr(*, "problems")=&lt;externalptr&gt; </code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Dimensions:</strong> Like measuring width and height, we can do the same with datasets:</p>
+<ul>
+<li>Function <code>nrow()</code> prints the total number of rows</li>
+<li>Function <code>ncol()</code> prints the total number of columns</li>
+<li>Function <code>dim()</code> prints the total number of rows and columns</li>
+</ul>
+<p>Recall that in R, dimensions are printed or specified with rows first, then columns.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(parks)     <span class="co"># Print total rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5007</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(parks)     <span class="co"># Print total columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(parks)      <span class="co"># Print rows and columns</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5007    5</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Length:</strong> Function <code>length()</code> prints the number of values for a single variable or vector.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(parks<span class="sc">$</span>Facility)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5007</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Row &amp; Column Names:</strong> Three functions are ideal for printing row and column names:</p>
+<ul>
+<li>Function <code>rownames()</code> prints the names of each row, though rows are rarely named</li>
+<li>Function <code>colnames()</code> prints the names of each column (i.e.&nbsp;variable)</li>
+<li>Function <code>names()</code> also prints the names of each variable</li>
+<li>Rename variables by assigning new names to their output</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(parks)[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]                              <span class="co"># Print row names 1-5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1" "2" "3" "4" "5"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(parks)                                   <span class="co"># Print variable names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Year"         "OPRHP Region" "County"       "Facility"     "Attendance"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(parks)                                      <span class="co"># Print variable names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Year"         "OPRHP Region" "County"       "Facility"     "Attendance"  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(parks) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Region"</span>, <span class="st">"County"</span>, </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Facility"</span>, <span class="st">"Attendance"</span>)       <span class="co"># Reassign new names</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(parks)                                      <span class="co"># Print new names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Year"       "Region"     "County"     "Facility"   "Attendance"</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Classes:</strong> We can determine the class of any object using function <code>class()</code>.</p>
+<ul>
+<li>Determine classes of entire datasets</li>
+<li>Determine classes of individual variables</li>
+<li>Determine classes of other objects, e.g.&nbsp;models</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(parks)                                      <span class="co"># Dataset class</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(parks<span class="sc">$</span>Year)                                 <span class="co"># Variable class</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "numeric"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Attendance <span class="sc">~</span> Year <span class="sc">+</span> Region, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> parks)                         <span class="co"># Assign linear model</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(model)                                      <span class="co"># Model class</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "lm"</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Categorical Levels:</strong> Print each category (“level”) of <strong>factor</strong> variables with <code>levels()</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>fctr <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(parks<span class="sc">$</span>Region)                   <span class="co"># Coerce to "factor"</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(fctr)                                      <span class="co"># Print levels</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Allegany"         "Central"          "Finger Lakes"     "Genesee"         
+ [5] "Long Island"      "New York City"    "Niagara"          "Palisades"       
+ [9] "Saratoga"         "Saratoga/Capital" "Taconic"          "Thousand Islands"</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>First &amp; Last Observations</strong>: Functions <code>head()</code> and <code>tail()</code> print first and last rows:</p>
+<ul>
+<li>Function <code>head()</code> prints the first rows of your data</li>
+<li>Function <code>tail()</code> prints the last rows of your data</li>
+<li>Specify the number of rows with argument <code>n =</code></li>
+<li>By default, six rows are printed</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(parks, <span class="at">n =</span> <span class="dv">3</span>)      <span class="co"># Print first 3 rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Year   Region      County                Facility Attendance
+1 2023 Allegany Cattaraugus    Allegany Quaker Area     792323
+2 2023 Allegany Cattaraugus Allegany Red House Area     707529
+3 2023 Allegany  Chautauqua    Barcelona Lighthouse      18019</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(parks, <span class="at">n =</span> <span class="dv">3</span>)      <span class="co"># Print last 3 rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Year           Region      County                              Facility
+5005 2003 Thousand Islands St Lawrence Robert Moses St Pk - Thousand Islands
+5006 2003 Thousand Islands St Lawrence               St Lawrence Golf Course
+5007 2003 Thousand Islands St Lawrence               Wilson Hill Boat Launch
+     Attendance
+5005     260797
+5006      18226
+5007      15289</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Summaries:</strong> Function <code>summary()</code> describes individual variables according to their class:</p>
+<ul>
+<li>Class <strong>numeric</strong>, <strong>integer</strong>, or <strong>double</strong> prints descriptive statistics</li>
+<li>Class <strong>character</strong> includes total values and missing values</li>
+<li>Class <strong>factor</strong> tallies the total occurences in each level</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(parks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Year         Region             County            Facility        
+ Min.   :2003   Length:5007        Length:5007        Length:5007       
+ 1st Qu.:2008   Class :character   Class :character   Class :character  
+ Median :2013   Mode  :character   Mode  :character   Mode  :character  
+ Mean   :2013                                                           
+ 3rd Qu.:2018                                                           
+ Max.   :2023                                                           
+   Attendance     
+ Min.   :      0  
+ 1st Qu.:  20177  
+ Median :  63934  
+ Mean   : 271216  
+ 3rd Qu.: 203393  
+ Max.   :9596491  </code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>View Interactively:</strong> In RStudio, function <code>View()</code> presents data in an interactive table.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(parks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<center>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/function_view.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><em>An interactive table resulting from function <code>View()</code> in RStudio’s IDE.</em></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</center>
+<p><br></p>
+<p><strong>Documentation:</strong> If data are from an R package, <code>?</code> or <code>help()</code> opens documentation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)            <span class="co"># Load package containing data</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>?economics                  <span class="co"># Open documentation with `?`</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(economics)             <span class="co"># Open documentation with help()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<center>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/help_documentation.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption><em>Interactive documentation in RStudio using <code>?</code> or <code>help()</code>.</em></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</center>
+<p><br> <br></p>
+</section>
+<section id="techniques-for-tallies-proportions" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="techniques-for-tallies-proportions"><span class="header-section-number">11.4.2</span> Techniques for Tallies &amp; Proportions</h3>
+<p>Many functions allow tallying frequencies and proportions for <strong>character</strong> and <strong>factor</strong> variables.</p>
+<p><br></p>
+<p><strong>Contingency Tables:</strong> Function <code>table()</code> prints total of occurrences for qualitative values.</p>
+<p>These tables are also called <strong>Contingency Tables</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(parks<span class="sc">$</span>Region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        Allegany          Central     Finger Lakes          Genesee 
+             121              544              586              250 
+     Long Island    New York City          Niagara        Palisades 
+             626              198              378              702 
+        Saratoga Saratoga/Capital          Taconic Thousand Islands 
+             322              162              389              729 </code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Proportionality:</strong> Function <code>prop.table()</code>, with <code>table()</code> output, shows proportionality.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>regions <span class="ot">&lt;-</span> <span class="fu">table</span>(parks<span class="sc">$</span>Region)      <span class="co"># Assign `table()` output: "regions"</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(regions)                 <span class="co"># Print proportionality</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+        Allegany          Central     Finger Lakes          Genesee 
+      0.02416617       0.10864789       0.11703615       0.04993010 
+     Long Island    New York City          Niagara        Palisades 
+      0.12502497       0.03954464       0.07549431       0.14020371 
+        Saratoga Saratoga/Capital          Taconic Thousand Islands 
+      0.06430997       0.03235470       0.07769123       0.14559617 </code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Functions <code>table()</code> or <code>prop.table()</code> can also weigh variables against eachother.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>subset <span class="ot">&lt;-</span> parks[, <span class="fu">c</span>(<span class="st">"Year"</span>, <span class="st">"Region"</span>)]    <span class="co"># Subset two variables</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(subset)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]                      <span class="co"># Frequency of "regions" 1-5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Region
+Year   Allegany Central Finger Lakes Genesee Long Island
+  2003        5      26           28      12          29
+  2004        5      26           28      12          29
+  2005        5      26           28      12          29
+  2006        5      26           28      12          29
+  2007        5      26           28      12          29
+  2008        5      26           28      12          29
+  2009        5      26           28      12          29
+  2010        5      26           28      12          29
+  2011        5      26           28      12          29
+  2012        5      26           28      12          29
+  2013        5      26           28      12          29
+  2014        5      26           28      12          29
+  2015        6      26           28      12          29
+  2016        6      26           28      12          29
+  2017        7      25           27      11          31
+  2018        7      25           27      11          31
+  2019        7      26           28      12          31
+  2020        7      26           28      12          31
+  2021        7      26           28      12          32
+  2022        7      26           28      12          32
+  2023        7      26           28      12          32</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>output <span class="ot">&lt;-</span> <span class="fu">table</span>(subset)                   <span class="co"># Assign `table()` output</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(output)[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>]                 <span class="co"># Proportionality of "regions" 1-5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Region
+Year      Allegany     Central Finger Lakes     Genesee Long Island
+  2003 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2004 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2005 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2006 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2007 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2008 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2009 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2010 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2011 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2012 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2013 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2014 0.000998602 0.005192730  0.005592171 0.002396645 0.005791891
+  2015 0.001198322 0.005192730  0.005592171 0.002396645 0.005791891
+  2016 0.001198322 0.005192730  0.005592171 0.002396645 0.005791891
+  2017 0.001398043 0.004993010  0.005392451 0.002196924 0.006191332
+  2018 0.001398043 0.004993010  0.005392451 0.002196924 0.006191332
+  2019 0.001398043 0.005192730  0.005592171 0.002396645 0.006191332
+  2020 0.001398043 0.005192730  0.005592171 0.002396645 0.006191332
+  2021 0.001398043 0.005192730  0.005592171 0.002396645 0.006391053
+  2022 0.001398043 0.005192730  0.005592171 0.002396645 0.006391053
+  2023 0.001398043 0.005192730  0.005592171 0.002396645 0.006391053</code></pre>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="initial-analysis-techniques-from-packages" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="initial-analysis-techniques-from-packages"><span class="header-section-number">11.4.3</span> Initial Analysis Techniques from Packages</h3>
+<p>Many R packages are helpful in <strong>Initial Data Analysis</strong>, e.g.&nbsp;<strong>DescTools</strong> and <strong>dplyr</strong>.</p>
+<p><br></p>
+<p><strong>Advanced Summaries:</strong> In <strong>DescTools</strong>, function <code>Desc()</code> is an enhanced <code>summary()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DescTools)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">Desc</span>(parks<span class="sc">$</span>Year)          <span class="co"># Function `Desc()` on a quantitative variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------------------------------------------------------------------------------ 
+parks$Year (numeric)
+
+    length         n       NAs    unique        0s      mean    meanCI'
+     5'007     5'007         0        21         0  2'013.08  2'012.91
+              100.0%      0.0%                0.0%            2'013.25
+                                                                      
+       .05       .10       .25    median       .75       .90       .95
+  2'004.00  2'005.00  2'008.00  2'013.00  2'018.00  2'021.00  2'022.00
+                                                                      
+     range        sd     vcoef       mad       IQR      skew      kurt
+     20.00      6.08      0.00      7.41     10.00     -0.01     -1.21
+                                                                      
+lowest : 2'003.0 (236), 2'004.0 (236), 2'005.0 (236), 2'006.0 (236), 2'007.0 (236)
+highest: 2'019.0 (245), 2'020.0 (244), 2'021.0 (246), 2'022.0 (246), 2'023.0 (246)
+
+' 95%-CI (classic)</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Desc</span>(parks<span class="sc">$</span>Region)        <span class="co"># Function `Desc()` on a qualitative variable</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>------------------------------------------------------------------------------ 
+parks$Region (character)
+
+  length      n    NAs unique levels  dupes
+   5'007  5'007      0     12     12      y
+         100.0%   0.0%                     
+
+               level  freq   perc  cumfreq  cumperc
+1   Thousand Islands   729  14.6%      729    14.6%
+2          Palisades   702  14.0%    1'431    28.6%
+3        Long Island   626  12.5%    2'057    41.1%
+4       Finger Lakes   586  11.7%    2'643    52.8%
+5            Central   544  10.9%    3'187    63.7%
+6            Taconic   389   7.8%    3'576    71.4%
+7            Niagara   378   7.5%    3'954    79.0%
+8           Saratoga   322   6.4%    4'276    85.4%
+9            Genesee   250   5.0%    4'526    90.4%
+10     New York City   198   4.0%    4'724    94.3%
+11  Saratoga/Capital   162   3.2%    4'886    97.6%
+12          Allegany   121   2.4%    5'007   100.0%</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Advanced Structures:</strong> In <strong>dplyr</strong>, function <code>glimpse()</code> is a more organized <code>str()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(parks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 5,007
+Columns: 5
+$ Year       &lt;dbl&gt; 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023, 2023,…
+$ Region     &lt;chr&gt; "Allegany", "Allegany", "Allegany", "Allegany", "Allegany",…
+$ County     &lt;chr&gt; "Cattaraugus", "Cattaraugus", "Chautauqua", "Chautauqua", "…
+$ Facility   &lt;chr&gt; "Allegany Quaker Area", "Allegany Red House Area", "Barcelo…
+$ Attendance &lt;dbl&gt; 792323, 707529, 18019, 91967, 152695, 110265, 36725, 235154…</code></pre>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+</section>
+<section id="exploratory-data-visualization" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="exploratory-data-visualization"><span class="header-section-number">11.5</span> Exploratory Data Visualization</h2>
+<p><strong>Exploratory Data Visualization</strong> or <strong>EDV</strong> is critical to exploratory analyses.</p>
+<ul>
+<li>Allows “quick and dirty” visualizations of your new data’s variables</li>
+<li>Used internally to benefit yourself, collaborators, or specialized audiences</li>
+<li>Assists analysts in decoding and identifying patterns and anomalies in new data</li>
+</ul>
+<p><br> <br></p>
+<section id="common-exploratory-visualization-techniques" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="common-exploratory-visualization-techniques"><span class="header-section-number">11.5.1</span> Common Exploratory Visualization Techniques</h3>
+<p>Several functions exist for exploring data visually in base R.</p>
+<p><br></p>
+<p><strong>Histograms:</strong> Quickly view the distribution of quantitative variables with <code>hist()</code>.</p>
+<ul>
+<li>Histograms are univariate and show the freqency of a range of numeric values</li>
+<li>Increase their resolution by increasing the number of ranges (<code>breaks =</code>)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(parks<span class="sc">$</span>Attendance,        <span class="co"># Specify a single variable</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">breaks =</span> <span class="dv">100</span>)            <span class="co"># Specify number of breaks and "bins"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Box Plots:</strong> View several distributions across categorical variables with <code>boxplot()</code>.</p>
+<ul>
+<li>The beginning and end of boxplots represent the first and third quartiles, resp.</li>
+<li>The width of the box, itself, is the <strong>Interquartile Range</strong>, or <strong>IQR</strong></li>
+<li>The middle of each boxplot represents the median (50%)</li>
+<li>“Whiskers” are calculated by <code>1.5 * IQR</code></li>
+<li>Outliers are demarcated beyond whiskers</li>
+<li>Both variables are separated with <code>~</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(parks<span class="sc">$</span>Attendance <span class="sc">~</span> parks<span class="sc">$</span>Region)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Scatter Plots:</strong> View relationships between quantitative variables with <code>plot()</code>.</p>
+<p>Since <code>parks</code> only contains one quantitative variable, we use <code>economics</code> from <strong>ggplot2</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> economics<span class="sc">$</span>uempmed,     <span class="co"># Median duration of unemployment, in weeks</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">y =</span> economics<span class="sc">$</span>unemploy)    <span class="co"># Number of unemployed, in thousands</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Pairs Plots:</strong> Pairs plots create a matrix of small multiples for each variable.</p>
+<ul>
+<li>Small multiples allow multiple side-by-side comparisons of plots on common axes</li>
+<li>Depending on the <strong>class</strong> of each variable, different plot methods are used</li>
+</ul>
+<p>Again, for want of class <strong>numeric</strong> variables, we use <code>economics</code> from <strong>ggplot2</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(<span class="at">x =</span> economics)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Model Summaries:</strong> Function <code>plot()</code>, used with a model, produces four summary plots.</p>
+<ul>
+<li>By adjusting the global graphics parameters of base R, we can print all four</li>
+<li>In function <code>par()</code>, specify total rows and columns in function <code>c()</code></li>
+<li>Argument <code>mfrow =</code> accepts these two values in function <code>par()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Attendance <span class="sc">~</span> Year <span class="sc">+</span> Region, </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> parks)                   <span class="co"># Create linear model: "model"</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))                        <span class="co"># Specify dimensions in `par()`</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model)                                 <span class="co"># Call `plot()` on model</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Advanced Pairs Plots:</strong> Use package <strong>ggplot2</strong> extension <strong>GGally</strong> and <code>ggpairs()</code>.</p>
+<p>As a more colorful example, we’ll use base R dataset <code>iris</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)                     <span class="co"># Load packages</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(iris,                       <span class="co"># Specify dataset</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(<span class="at">color =</span> Species)) <span class="sc">+</span>     <span class="co"># Map colors to variable "Species"</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()                   <span class="co"># Preset theme cleans output</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="3_20-data-exploration_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+</section>
+<section id="descriptive-statistics" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="descriptive-statistics"><span class="header-section-number">11.6</span> Descriptive Statistics</h2>
+<p><strong>Descriptive</strong> or <strong>Summary Statistics</strong> concisely <em>describe</em> datasets or individual variables with summary information, e.g.&nbsp;mean, median, mode, minimum value, maxium value, variance, and more.</p>
+<p>While <strong>descriptive statistics</strong> can be the be-all and end-all of a descriptive analysis, they’re also integral to <strong>exploratory data analysis</strong>.</p>
+<p><br> <br></p>
+<section id="common-functions-for-descriptive-statistics" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="common-functions-for-descriptive-statistics"><span class="header-section-number">11.6.1</span> Common Functions for Descriptive Statistics</h3>
+<p>Again, base R has no shortage of functions for <strong>descriptive</strong> or <strong>summary statistics</strong>.</p>
+<p><br></p>
+<p><strong>Mean:</strong> The average or <strong>mean</strong> value of quantitative data is calculated with <code>mean()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(parks<span class="sc">$</span>Attendance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 271216</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Median:</strong> Find the value of the 50th percentile, or <strong>median</strong>, with <code>median()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(parks<span class="sc">$</span>Attendance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 63934</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Minima &amp; Maxima:</strong> Find the smallest and largest values with <code>min()</code> and <code>max()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">min</span>(parks<span class="sc">$</span>Attendance)   <span class="co"># The smallest value in variable "Attendance"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(parks<span class="sc">$</span>Attendance)   <span class="co"># The largest value in variable "Attendance"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9596491</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Variance:</strong> Determine the <strong>variance</strong> of quantitative values with <code>var()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(parks<span class="sc">$</span>Attendance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 670166256405</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Quantiles:</strong> Get <strong>quantiles</strong>, or the value at 0, 25, 50, 75, and 100%, with <code>quantile()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(parks<span class="sc">$</span>Attendance)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     0%     25%     50%     75%    100% 
+      0   20177   63934  203393 9596491 </code></pre>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+</section>
+<section id="warning-summary-statistics-missing-values" class="level2 warning" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="warning-summary-statistics-missing-values"><span class="header-section-number">11.7</span> WARNING: SUMMARY STATISTICS &amp; MISSING VALUES</h2>
+<ul>
+<li><p>If the quantitative data you intend to summarize contains missing values (<code>NA</code>), the output may not appear as expected.</p></li>
+<li><p>To tell R that missing values exist, and to exclude them from calculation, simply set argument <code>na.rm =</code> to <code>TRUE</code>.</p></li>
+</ul>
+</section>
+<p><br> <br></p>
+<section id="tabulating-descriptive-statistics" class="level3" data-number="11.7.1">
+<h3 data-number="11.7.1" class="anchored" data-anchor-id="tabulating-descriptive-statistics"><span class="header-section-number">11.7.1</span> Tabulating Descriptive Statistics</h3>
+<p>Tabulate descriptive statistics from <code>summary()</code> output with <code>data.frame()</code>.</p>
+<p><em>Why?</em> This provides an easy method to tabulate and write summary statistics to a file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>sumstats <span class="ot">&lt;-</span> <span class="fu">summary</span>(parks)          <span class="co"># Assign summary() output: "park_stats"</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>sumstats <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(sumstats)    <span class="co"># Coerce to data frame</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>sumstats[, <span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>]                     <span class="co"># Print data frame</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           Var2               Freq
+1          Year     Min.   :2003  
+2          Year     1st Qu.:2008  
+3          Year     Median :2013  
+4          Year     Mean   :2013  
+5          Year     3rd Qu.:2018  
+6          Year     Max.   :2023  
+7        Region Length:5007       
+8        Region Class :character  
+9        Region Mode  :character  
+10       Region               &lt;NA&gt;
+11       Region               &lt;NA&gt;
+12       Region               &lt;NA&gt;
+13       County Length:5007       
+14       County Class :character  
+15       County Mode  :character  
+16       County               &lt;NA&gt;
+17       County               &lt;NA&gt;
+18       County               &lt;NA&gt;
+19     Facility Length:5007       
+20     Facility Class :character  
+21     Facility Mode  :character  
+22     Facility               &lt;NA&gt;
+23     Facility               &lt;NA&gt;
+24     Facility               &lt;NA&gt;
+25   Attendance  Min.   :      0  
+26   Attendance  1st Qu.:  20177  
+27   Attendance  Median :  63934  
+28   Attendance  Mean   : 271216  
+29   Attendance  3rd Qu.: 203393  
+30   Attendance  Max.   :9596491  </code></pre>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="group-wise-summaries-in-base-r" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="group-wise-summaries-in-base-r"><span class="header-section-number">11.8</span> Group-Wise Summaries in Base R</h2>
+<p>So far, we’ve look at a veriety of ways to explore and summarize datasets and individual variables.</p>
+<p>However, you may often seek to summarize and compare subsets of data that are <strong>grouped</strong> by some common value, category, or label. The following explores how to group and describe data by one or more specified characteristics.</p>
+<p><br> <br></p>
+<section id="tabulating-contingency-tables" class="level3" data-number="11.8.1">
+<h3 data-number="11.8.1" class="anchored" data-anchor-id="tabulating-contingency-tables"><span class="header-section-number">11.8.1</span> Tabulating Contingency Tables</h3>
+<p>In <em>Section 1.1: Exploratory Data Analysis</em>, we learned about <strong>contingency tables</strong>.</p>
+<ul>
+<li><strong>Contingency tables</strong> tally the frequency of values for each category in your data
+<ul>
+<li>Calculated with function <code>table()</code></li>
+</ul></li>
+<li><strong>Proportional contingency tables</strong> tally the proportion of each category
+<ul>
+<li>Calulated with the output of <code>table()</code> in function <code>prop.table()</code></li>
+</ul></li>
+</ul>
+<p><br></p>
+<p>In order to tabulate <strong>contingency tables</strong> in their own data frames:</p>
+<ol type="1">
+<li>Flatten them with <code>ftable()</code> instead of <code>table()</code></li>
+<li>Convert the output to a data frame with <code>data.frame()</code></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>reg_freq <span class="ot">&lt;-</span> <span class="fu">ftable</span>(parks<span class="sc">$</span>Region)    <span class="co"># Assign `ftable()` output: "reg_freq"</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(reg_freq)                <span class="co"># Enter output in `data.frame()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Var1 Freq
+1          Allegany  121
+2           Central  544
+3      Finger Lakes  586
+4           Genesee  250
+5       Long Island  626
+6     New York City  198
+7           Niagara  378
+8         Palisades  702
+9          Saratoga  322
+10 Saratoga/Capital  162
+11          Taconic  389
+12 Thousand Islands  729</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Likewise, for <strong>proportional contingency tables</strong>:</p>
+<ol type="1">
+<li>Flatten them with <code>ftable()</code> instead of <code>table()</code></li>
+<li>Call <code>prop.table()</code> on the output of <code>ftable()</code></li>
+<li>Convert to a data frame with <code>data.frame()</code></li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>reg_freq <span class="ot">&lt;-</span> <span class="fu">ftable</span>(parks<span class="sc">$</span>Region)    <span class="co"># Assign `ftable()` output: "reg_freq"</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>reg_prop <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(reg_freq)    <span class="co"># Assign `prop.table()` output: "reg_prop"</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(reg_prop)                <span class="co"># Enter output in `data.frame()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               Var1       Freq
+1          Allegany 0.02416617
+2           Central 0.10864789
+3      Finger Lakes 0.11703615
+4           Genesee 0.04993010
+5       Long Island 0.12502497
+6     New York City 0.03954464
+7           Niagara 0.07549431
+8         Palisades 0.14020371
+9          Saratoga 0.06430997
+10 Saratoga/Capital 0.03235470
+11          Taconic 0.07769123
+12 Thousand Islands 0.14559617</code></pre>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="contingency-tables-group-wise-frequencies" class="level3" data-number="11.8.2">
+<h3 data-number="11.8.2" class="anchored" data-anchor-id="contingency-tables-group-wise-frequencies"><span class="header-section-number">11.8.2</span> Contingency Tables &amp; Group-Wise Frequencies</h3>
+<p>Comign soon…</p>
+<p><br> <br></p>
+</section>
+<section id="apply-functions-group-wise-operations" class="level3" data-number="11.8.3">
+<h3 data-number="11.8.3" class="anchored" data-anchor-id="apply-functions-group-wise-operations"><span class="header-section-number">11.8.3</span> Apply Functions &amp; Group-Wise Operations</h3>
+<p>Comign soon…</p>
+<p><br> <br></p>
+</section>
+<section id="aggregation-group-wise-operations" class="level3" data-number="11.8.4">
+<h3 data-number="11.8.4" class="anchored" data-anchor-id="aggregation-group-wise-operations"><span class="header-section-number">11.8.4</span> Aggregation &amp; Group-Wise Operations</h3>
+<p>Comign soon…</p>
+<p><br> <br></p>
+</section>
+</section>
+<section id="group-wise-operations-with-dplyr" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="group-wise-operations-with-dplyr"><span class="header-section-number">11.9</span> Group-Wise Operations with dplyr</h2>
+<p>Package <strong>dplyr</strong> is a unified framework built explicitly for data manipulation in R, e.g.:</p>
+<ul>
+<li>Reordering rows based on one or more variables</li>
+<li>Performing complex filtering and additive joins</li>
+<li>Selecting, reordering, and renaming variables in a data frame</li>
+<li>Filtering rows by specified conditional statements and logical operators</li>
+<li>Grouping rows by one or more specified variables and summarizing their values</li>
+</ul>
+<p>We explore most of theis elsewhere. Here, we focus on group-wise operations.</p>
+<p>But first, we’ll provide a brief overview of <strong>dplyr</strong> syntax.</p>
+<p><br> <br></p>
+<section id="package-dplyr-syntax" class="level3" data-number="11.9.1">
+<h3 data-number="11.9.1" class="anchored" data-anchor-id="package-dplyr-syntax"><span class="header-section-number">11.9.1</span> Package dplyr Syntax</h3>
+<p>Package <strong>dplyr</strong> has a somewhat nuanced syntax that is easy to master. Pay attention:</p>
+<p><br></p>
+<p><strong>Piping:</strong> Package <strong>dplyr</strong> uses the <strong>pipe operator</strong>, or <code>%&gt;%</code>, which:</p>
+<ul>
+<li>Passes data frames through some new function, emerging as an altered data frame</li>
+<li>Begins with a data frame input in the left hand side</li>
+<li>Ends with a data frame output from the right hand side</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span>                                         <span class="co"># Specify data frame and pipe</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Facility <span class="sc">==</span> <span class="st">"Allegany Red House Area"</span>)   <span class="co"># Pass via function `filter()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 5
+    Year Region   County      Facility                Attendance
+   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;                        &lt;dbl&gt;
+ 1  2023 Allegany Cattaraugus Allegany Red House Area     707529
+ 2  2022 Allegany Cattaraugus Allegany Red House Area     712217
+ 3  2021 Allegany Cattaraugus Allegany Red House Area     745792
+ 4  2020 Allegany Cattaraugus Allegany Red House Area     665081
+ 5  2019 Allegany Cattaraugus Allegany Red House Area     718483
+ 6  2018 Allegany Cattaraugus Allegany Red House Area     712217
+ 7  2017 Allegany Cattaraugus Allegany Red House Area     730926
+ 8  2016 Allegany Cattaraugus Allegany Red House Area     715179
+ 9  2015 Allegany Cattaraugus Allegany Red House Area     750751
+10  2014 Allegany Cattaraugus Allegany Red House Area     686068
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Bare Variable Names:</strong> Once the dataset is named, you need not type it again.</p>
+<ul>
+<li>R recognizes when the data frame has been called</li>
+<li>Therefore, variables need only be named, without the <code>dataset$x</code> notation</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(parks)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Year"       "Region"     "County"     "Facility"   "Attendance"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span>                             <span class="co"># Call dataset object name</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Year, Region, Attendance)    <span class="co"># Use bare variable names</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5,007 × 3
+    Year Region   Attendance
+   &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt;
+ 1  2023 Allegany     792323
+ 2  2023 Allegany     707529
+ 3  2023 Allegany      18019
+ 4  2023 Allegany      91967
+ 5  2023 Allegany     152695
+ 6  2023 Allegany     110265
+ 7  2023 Allegany      36725
+ 8  2023 Central      235154
+ 9  2023 Central       67994
+10  2023 Central       60649
+# ℹ 4,997 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Tibbles:</strong> When passed through <strong>dplyr</strong> functions, they become <strong>tibbles</strong>.</p>
+<ul>
+<li><strong>Tibbles</strong> are truncated printouts of data frames</li>
+<li>Typically, <strong>tibbles</strong> print the first ten observations</li>
+<li><strong>Tibbles</strong> also provide both dimensions and variable classes</li>
+<li>Any unprinted observations are summarized underneath the first ten</li>
+<li>With a large amount of variables, <strong>tibbles</strong> print only what fits on-screen</li>
+<li>Like unprinted observations, variables that do not fit on-screen are summarized</li>
+</ul>
+<p><br> <br></p>
+</section>
+<section id="grouping-by-variables" class="level3" data-number="11.9.2">
+<h3 data-number="11.9.2" class="anchored" data-anchor-id="grouping-by-variables"><span class="header-section-number">11.9.2</span> Grouping by Variables</h3>
+<p>In <strong>dplyr</strong>, function <code>group_by()</code> accepts the bare names of one or more variables.</p>
+<p>Notably, <strong>grouping</strong> does nothing by itself. Data must be <strong>piped</strong> into a new function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year)            <span class="co"># Grouping by a single variable: "Year"</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Region, Year)    <span class="co"># Grouping by two variables: "Region", "Year"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="group-by-summarize-operations" class="level3" data-number="11.9.3">
+<h3 data-number="11.9.3" class="anchored" data-anchor-id="group-by-summarize-operations"><span class="header-section-number">11.9.3</span> Group By-Summarize Operations</h3>
+<p>As noted, we must use a function to operate on <strong>grouped</strong> data.</p>
+<ul>
+<li>Function <code>summarize()</code> allows us to make new variables on grouped data</li>
+<li>Within <code>summarize()</code>, the basic formula is: <code>new_variable = function(existing_variable)</code></li>
+</ul>
+<p>Here, we create new variable <code>Average</code> from existing variable <code>Attendance</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span>                                 <span class="co"># Invoke "parks"</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span>                      <span class="co"># Group by "Year"</span></span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Average =</span> <span class="fu">mean</span>(Attendance))   <span class="co"># Create "Average" with `mean()`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 2
+    Year Average
+   &lt;dbl&gt;   &lt;dbl&gt;
+ 1  2003 220094.
+ 2  2004 223606.
+ 3  2005 235422.
+ 4  2006 230406.
+ 5  2007 240452.
+ 6  2008 231775.
+ 7  2009 240104.
+ 8  2010 244485.
+ 9  2011 242465.
+10  2012 255553.
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Multiple Summary Variables:</strong> Create multiple new variables in one <code>summarize()</code> call.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Attendance),</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">Median =</span> <span class="fu">median</span>(Attendance),</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">Maximum =</span> <span class="fu">max</span>(Attendance),</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">Records =</span> <span class="fu">n</span>())                <span class="co"># Create multiple new variables</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 5
+    Year    Mean Median Maximum Records
+   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;int&gt;
+ 1  2003 220094. 48199  7390268     236
+ 2  2004 223606. 47764  7779887     236
+ 3  2005 235422. 50426. 7762999     236
+ 4  2006 230406. 50374. 7756133     236
+ 5  2007 240452. 61394. 7924083     236
+ 6  2008 231775. 57804. 7925725     236
+ 7  2009 240104. 60405  8130765     236
+ 8  2010 244485. 58895  8274942     236
+ 9  2011 242465. 54960  8448914     236
+10  2012 255553. 62370. 8690962     236
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Multiple Grouping Variables:</strong> We can use multiple variables in <code>group_by()</code>.</p>
+<ul>
+<li>Creates summaries for each permutation of unique values
+<ul>
+<li>Suppose we group by one variable with 5 categories and one with 10</li>
+<li>Total permutations equals <code>5 * 10</code>, or 50 groups</li>
+</ul></li>
+<li>Note, also, that <em>not grouping on variables will drop ungrouped variables</em>
+<ul>
+<li>In other words, grouping by <code>X</code>, not <code>Y</code>, means <code>Y</code> is then excluded</li>
+</ul></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year, Region) <span class="sc">%&gt;%</span>              <span class="co"># Group on variables "Year", "Region"</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Attendance),</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">Median =</span> <span class="fu">median</span>(Attendance))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 231 × 4
+# Groups:   Year [21]
+    Year Region           Mean  Median
+   &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;   &lt;dbl&gt;
+ 1  2003 Allegany      351875  192079 
+ 2  2003 Central        88790.  41128.
+ 3  2003 Finger Lakes   93691.  42539 
+ 4  2003 Genesee        92704.  15320 
+ 5  2003 Long Island   624115. 196520 
+ 6  2003 New York City 332013. 118444 
+ 7  2003 Niagara       536725.  93284 
+ 8  2003 Palisades     198938.  19887 
+ 9  2003 Saratoga      100925.  48230 
+10  2003 Taconic       161300.  93131 
+# ℹ 221 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Creating Summaries of Summaries:</strong> Use variables from <code>summarize()</code> in the same call!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>parks <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Attendance),</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">Total =</span> <span class="fu">sum</span>(Attendance),                      <span class="co"># Create "Total"</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">Proportion =</span> Total <span class="sc">/</span> <span class="fu">sum</span>(parks<span class="sc">$</span>Attendance))   <span class="co"># Use "Total" in formula</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 4
+    Year    Mean    Total Proportion
+   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;
+ 1  2003 220094. 51942100     0.0382
+ 2  2004 223606. 52770940     0.0389
+ 3  2005 235422. 55559694     0.0409
+ 4  2006 230406. 54375864     0.0400
+ 5  2007 240452. 56746576     0.0418
+ 6  2008 231775. 54698971     0.0403
+ 7  2009 240104. 56664442     0.0417
+ 8  2010 244485. 57698351     0.0425
+ 9  2011 242465. 57221809     0.0421
+10  2012 255553. 60310499     0.0444
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Assigning Summary Output:</strong> Preface <code>summarize()</code> calles with assignment, <code>&lt;-</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>mean_att <span class="ot">&lt;-</span> parks <span class="sc">%&gt;%</span>                 <span class="co"># Assign expression to "mean_att"</span></span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Attendance))</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>mean_att                              <span class="co"># Autoprint results</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 2
+    Year    Mean
+   &lt;dbl&gt;   &lt;dbl&gt;
+ 1  2003 220094.
+ 2  2004 223606.
+ 3  2005 235422.
+ 4  2006 230406.
+ 5  2007 240452.
+ 6  2008 231775.
+ 7  2009 240104.
+ 8  2010 244485.
+ 9  2011 242465.
+10  2012 255553.
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>Ungrouping:</strong> As a rule, consider whether to use function <code>ungroup()</code> after <code>group_by()</code>.</p>
+<ul>
+<li>If you use <strong>grouped</strong> summaries for later analysis, they remain grouped under the hood</li>
+<li>This is particularly annoying to troubleshoot when far downstream in analyses</li>
+<li>Don’t suffer as so many have - use <code>ungroup()</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>mean_att <span class="ot">&lt;-</span> parks <span class="sc">%&gt;%</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(Attendance)) <span class="sc">%&gt;%</span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()                               <span class="co"># Don't enter a world of pain</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> <br></p>
+<div class="warning">
+<p>WARNING: SERIOUSLY, DON’T FORGET UNGROUP()</p>
+<ul>
+<li>Want to know why your summary data aren’t merging correctly?</li>
+<li>There’s a litany of possible reasons.</li>
+<li>Often: You didn’t use <code>ungroup()</code>.</li>
+</ul>
+<p>Use <code>ungroup()</code>.</p>
+</div>
+<p><br> <br></p>
+</section>
+</section>
+<section id="further-resources" class="level2" data-number="11.10">
+<h2 data-number="11.10" class="anchored" data-anchor-id="further-resources"><span class="header-section-number">11.10</span> Further Resources</h2>
+<p>The following resources may prove helpful to the curious learner.</p>
+<ul>
+<li><a href="https://stat545.com/dplyr-single.html#group_by-is-a-mighty-weapon">Bryan, J. “Single Table dplyr Functions” STAT 545.</a></li>
+<li><a href="http://rpubs.com/JamisonCrawford/manipulation">Crawford, J (2019). “Intro to R: Data Manipulation”.</a></li>
+<li><a href="https://rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf">RStudio (2015). “Data Wrangling Cheat Sheet”.</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./3_10-data-types.html" class="pagination-link" aria-label="Vectors and Data Types">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Vectors and Data Types</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./3_21-summary-stats.html" class="pagination-link" aria-label="Descriptive Statistics">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Descriptive Statistics</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

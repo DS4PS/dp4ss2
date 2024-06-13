@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>DP4SS - 13&nbsp; Getting Data into R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./2_50-saving-objects.html" rel="next">
+<link href="./3_21-summary-stats.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="www/textbook.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_40-importing-data.html">Data IO</a></li><li class="breadcrumb-item"><a href="./2_40-importing-data.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Getting Data into R</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">DP4SS</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introduction:</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">The Data Science Toolkit</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_10-core-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The <strong>R</strong> Language</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_20-rstudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">R Studio</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_30-data-driven-docs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data-Driven Docs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./0_31-markdown.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Markdown Guide</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Getting Started</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_00-learning-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Learning to Program</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./1_10-getting-help.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Getting Help</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">The Fundamentals</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_10-calculator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">R: An Overdesigned Calculator</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_20-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Introduction to Functions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_30-assignment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Assignment</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_10-data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Vectors and Data Types</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_20-data-exploration.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Exploring Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./3_21-summary-stats.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Descriptive Statistics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Data IO</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_40-importing-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Getting Data into R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_50-saving-objects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Saving Data to File</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Data Wrangling</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_10-data-verbs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Data Verbs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_20-data-recipes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Data Recipes</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_30-data-joins-core.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Data Joins</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./4_40-data-joins-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Data Joins With dplyr</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_10-constructing-groups.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Constructing Groups</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./5_20-group-structure.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Efficient Use of Group Structure</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./6_10-intro-to-data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to Data Viz</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_20-plot-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">The plot() Function</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_30-customized-graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Customizing Plots</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_31-xkcd-stickfigures.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Stylized Plot Example</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./6_40-ggplot2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">The Grammar of Graphics</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#reading-in-data" id="toc-reading-in-data" class="nav-link active" data-scroll-target="#reading-in-data"><span class="header-section-number">13.3</span> “Reading In” Data</a></li>
+  <li><a href="#know-thy-data-file-formats" id="toc-know-thy-data-file-formats" class="nav-link" data-scroll-target="#know-thy-data-file-formats"><span class="header-section-number">13.4</span> Know Thy Data: File Formats</a>
+  <ul class="collapse">
+  <li><a href="#text-or-flat-files" id="toc-text-or-flat-files" class="nav-link" data-scroll-target="#text-or-flat-files"><span class="header-section-number">13.4.1</span> Text or “Flat” Files</a></li>
+  <li><a href="#excel-file-formats" id="toc-excel-file-formats" class="nav-link" data-scroll-target="#excel-file-formats"><span class="header-section-number">13.4.2</span> Excel File Formats</a></li>
+  <li><a href="#json-file-format" id="toc-json-file-format" class="nav-link" data-scroll-target="#json-file-format"><span class="header-section-number">13.4.3</span> JSON File Format</a></li>
+  <li><a href="#statistical-software-formats" id="toc-statistical-software-formats" class="nav-link" data-scroll-target="#statistical-software-formats"><span class="header-section-number">13.4.4</span> Statistical Software Formats</a></li>
+  <li><a href="#rdata-format" id="toc-rdata-format" class="nav-link" data-scroll-target="#rdata-format"><span class="header-section-number">13.4.5</span> RData Format</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">13.4.6</span> Conclusions</a></li>
+  </ul></li>
+  <li><a href="#key-functions-for-importing-data" id="toc-key-functions-for-importing-data" class="nav-link" data-scroll-target="#key-functions-for-importing-data"><span class="header-section-number">13.5</span> Key Functions for Importing Data</a>
+  <ul class="collapse">
+  <li><a href="#workhorses-wrapper-functions" id="toc-workhorses-wrapper-functions" class="nav-link" data-scroll-target="#workhorses-wrapper-functions"><span class="header-section-number">13.5.1</span> Workhorses &amp; Wrapper Functions:</a></li>
+  </ul></li>
+  <li><a href="#base-r-reading-csv-files" id="toc-base-r-reading-csv-files" class="nav-link" data-scroll-target="#base-r-reading-csv-files"><span class="header-section-number">13.6</span> Base R: Reading CSV Files</a></li>
+  <li><a href="#base-r-reading-tsv-other-delimited-formats" id="toc-base-r-reading-tsv-other-delimited-formats" class="nav-link" data-scroll-target="#base-r-reading-tsv-other-delimited-formats"><span class="header-section-number">13.7</span> Base R: Reading TSV &amp; Other Delimited Formats</a></li>
+  <li><a href="#package-readr-functions" id="toc-package-readr-functions" class="nav-link" data-scroll-target="#package-readr-functions"><span class="header-section-number">13.8</span> Package “readr” Functions</a></li>
+  <li><a href="#importing-excel-files" id="toc-importing-excel-files" class="nav-link" data-scroll-target="#importing-excel-files"><span class="header-section-number">13.9</span> Importing Excel Files</a></li>
+  <li><a href="#importing-statistical-software-files" id="toc-importing-statistical-software-files" class="nav-link" data-scroll-target="#importing-statistical-software-files"><span class="header-section-number">13.10</span> Importing Statistical Software Files</a></li>
+  <li><a href="#getting-data-off-of-the-web" id="toc-getting-data-off-of-the-web" class="nav-link" data-scroll-target="#getting-data-off-of-the-web"><span class="header-section-number">13.11</span> Getting Data Off of the Web</a>
+  <ul class="collapse">
+  <li><a href="#retrieve-download-urls" id="toc-retrieve-download-urls" class="nav-link" data-scroll-target="#retrieve-download-urls"><span class="header-section-number">13.11.1</span> Retrieve Download URLs</a></li>
+  <li><a href="#retrieve-raw-data-urls" id="toc-retrieve-raw-data-urls" class="nav-link" data-scroll-target="#retrieve-raw-data-urls"><span class="header-section-number">13.11.2</span> Retrieve Raw Data URLs</a></li>
+  </ul></li>
+  <li><a href="#further-resources" id="toc-further-resources" class="nav-link" data-scroll-target="#further-resources"><span class="header-section-number">13.12</span> Further Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./2_40-importing-data.html">Data IO</a></li><li class="breadcrumb-item"><a href="./2_40-importing-data.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Getting Data into R</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Getting Data into R</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p><br></p>
+<div class="tip">
+<section id="key-concepts" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="key-concepts"><span class="header-section-number">13.1</span> Key Concepts</h2>
+<p>In this chapter, we’ll explore the following key concepts:</p>
+<ul>
+<li>File Formats</li>
+<li>RData Format</li>
+<li>Flat or Text Files</li>
+<li>Wrapper Functions</li>
+</ul>
+</section>
+<section id="key-takeaways" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="key-takeaways"><span class="header-section-number">13.2</span> Key Takeaways</h2>
+<p>Too long; didn’t read? Here’s what you need to know:</p>
+<ul>
+<li>Importing data is called “reading in” data in R, and done with <code>read*()</code> functions</li>
+<li>Know as what format your data are stored to use the appropriate function</li>
+<li>Read in statistical software files with packages “foreign” or “haven”</li>
+<li>Read in JSON files with package “jsonlite”</li>
+<li>Read directly from the web with URLs</li>
+</ul>
+<p><br> <br></p>
+</section>
+</div>
+<p><br> <br></p>
+<section id="reading-in-data" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="reading-in-data"><span class="header-section-number">13.3</span> “Reading In” Data</h2>
+<p><strong>Importing data</strong> is also called <strong>reading in data</strong> in R.</p>
+<p>Many base R functions begin with <code>read</code>, like <code>read.csv()</code> and <code>read.table()</code>.</p>
+<p>Some R packages have new reading functions, like <code>read_csv()</code> in the <strong>“readr”</strong> package.</p>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://pbfcomics.com/wp-content/uploads/2016/04/PBF130-Book_World.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Be careful with what you read into R!</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<center>
+Source: <a href="https://pbfcomics.com/comics/book-world/">Perry Bible Fellowship</a>
+</center>
+<p><br> <br></p>
+</section>
+<section id="know-thy-data-file-formats" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="know-thy-data-file-formats"><span class="header-section-number">13.4</span> Know Thy Data: File Formats</h2>
+<blockquote class="blockquote">
+<p>“If you know the [data] and know yourself,</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>you need not fear the result of a hundred [analyses].”</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>Sun Tzu, The Art of [Data Science]</p>
+</blockquote>
+<p><br></p>
+<p>If you want to get certain data into R, you must know the <strong>file format</strong>.</p>
+<ul>
+<li>File formats are standardized frameworks for encoding and storing information</li>
+<li>Some file formats are better than others, depending on the information stored</li>
+<li>Determine a file’s format by its <em>filename extension</em>, e.g.&nbsp;<code>.csv</code></li>
+<li>The most common data file formats include <code>.csv</code>, <code>.tsv</code>, and <code>.xlsx</code></li>
+</ul>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://imgs.xkcd.com/comics/file_extensions.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>Certain formats are better for storing data.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<center>
+Source: <a href="https://xkcd.com/1301/">XKCD</a>
+</center>
+<p><br> <br></p>
+<section id="text-or-flat-files" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="text-or-flat-files"><span class="header-section-number">13.4.1</span> Text or “Flat” Files</h3>
+<blockquote class="blockquote">
+<p><strong>flatly</strong> /ˈflatli/</p>
+</blockquote>
+<blockquote class="blockquote">
+<ol type="1">
+<li>Showing little interest or emotion.</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<ol start="2" type="1">
+<li>In a firm and unequivocal manner; absolutely.</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<ol start="3" type="1">
+<li>In a smooth and even way.</li>
+</ol>
+</blockquote>
+<blockquote class="blockquote">
+<p><em>Oxford English Dictionary</em></p>
+</blockquote>
+<p><br></p>
+<p>The far most familiar family of file formats includes <strong>text data</strong> or <strong>flat files</strong>.</p>
+<ul>
+<li>Flat files are simple, standard formats that use plain text</li>
+<li>Flat files are ubiquitous, non-proprietary, and accessible</li>
+<li>Converting a spreadsheet into a text file will “flatten it”, removing all formatting</li>
+</ul>
+<p><br></p>
+<div class="tip">
+<p><strong>PRO TIP:</strong></p>
+<p>Flat files are ideal for sharing data with collaborators.</p>
+<ul>
+<li>Not everyone has spreadsheet software, but anyone can use flat files</li>
+<li>Flat files don’t preserve formats, like borders and highlighted cells</li>
+<li>Flat files force users to store data tabularly “flatly”</li>
+</ul>
+</div>
+<p><br></p>
+<p><strong>Comma-separated values</strong> or <strong>CSV</strong> files store data in plain text:</p>
+<ul>
+<li>Each line in a CSV file represents one row</li>
+<li>Each value in a CSV file is separated by a comma</li>
+<li>Therefore, each comma designates a separate column</li>
+</ul>
+<p><br></p>
+<p><strong>A CSV in the Wild:</strong> Observe the following <a href="https://github.com/jamisoncrawford/wealth/blob/master/Tidy%20Data/hancock_lakeview_tidy.csv">public construction records</a> on GitHub:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/flat_file_image.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>What can you decode by observing this raw CSV file?</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>A Wrangled CSV:</strong> R (and other software) interpret and tame these formats tabularly.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>    project       name     ending   zip  ssn      class hours rate  gross
+1  Lakeview Ajay Glass 2015-08-02 14612 3888 Journeyman    40 18.5  740.0
+2  Lakeview Ajay Glass 2015-08-02 13205 2807 Journeyman    32 28.7  918.4
+3  Lakeview Ajay Glass 2015-08-02 14428 7762 Journeyman    40 33.7 1348.0
+4  Lakeview Ajay Glass 2015-08-02 14549 9759 Journeyman    26 33.7  876.2
+5  Lakeview Ajay Glass 2015-08-09 14433 5632 Journeyman    32 17.0  544.0
+6  Lakeview Ajay Glass 2015-08-09 14612 3888 Journeyman    40 18.5  740.0
+7  Lakeview Ajay Glass 2015-08-09 14428 7762 Journeyman    40 33.7 1348.0
+8  Lakeview Ajay Glass 2015-08-09 13118 2838 Journeyman    16 28.7  459.2
+9  Lakeview Ajay Glass 2015-08-16 14433 5632 Journeyman    32 17.0  544.0
+10 Lakeview Ajay Glass 2015-08-16 14612 3888 Journeyman    42 18.5  795.5
+       net  sex race ot pdf_no pdf_pg pg_ob
+1   511.31 &lt;NA&gt; &lt;NA&gt;  0      1      1     1
+2   586.65 &lt;NA&gt; &lt;NA&gt;  0      1      1     2
+3  1025.92 &lt;NA&gt; &lt;NA&gt;  0      1      1     3
+4   891.08 &lt;NA&gt; &lt;NA&gt;  0      1      1     4
+5   384.08 &lt;NA&gt; &lt;NA&gt;  0      1      3     1
+6   657.86 &lt;NA&gt; &lt;NA&gt;  0      1      3     2
+7  1025.92 &lt;NA&gt; &lt;NA&gt;  0      1      3     3
+8   361.98 &lt;NA&gt; &lt;NA&gt;  0      1      3     4
+9   384.08 &lt;NA&gt; &lt;NA&gt;  0      1      5     1
+10  616.28 &lt;NA&gt; &lt;NA&gt;  0      1      5     2</code></pre>
+</div>
+</div>
+<p><br> <br></p>
+<p><strong>Tab-separated values</strong> or <strong>TSV</strong> files store data in plain text:</p>
+<ul>
+<li>Like CSV, each line in a TSV file represents one row</li>
+<li>Also like CSV, each value in a CSV file is separated by a tab</li>
+<li>Each tab designates a separate column</li>
+</ul>
+<p><br></p>
+<p><strong>A TSV in the Wild:</strong> Observe the same <a href="https://github.com/jamisoncrawford/wealth/blob/master/Tidy%20Data/my_tsv.tsv">public construction records</a> on GitHub:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/tsv_file_image.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Raw TSV files are much more intepretable thanks to tabulation.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="excel-file-formats" class="level3" data-number="13.4.2">
+<h3 data-number="13.4.2" class="anchored" data-anchor-id="excel-file-formats"><span class="header-section-number">13.4.2</span> Excel File Formats</h3>
+<p><em>Microsoft Excel</em> files are significantly different from text or flat files.</p>
+<ul>
+<li>All Excel file extensions begin with <code>.xls</code>; a workbook is in <code>.xlsx</code> format</li>
+<li>Excel workbooks with multiple sheets must be read in one sheet at a time</li>
+<li>Multiple packages can help R handle Excel files, e.g.&nbsp;<code>readxl</code>, <code>XLConnect</code>, <code>gdata</code></li>
+</ul>
+<p><br></p>
+<div class="caution">
+<p><strong>WARNING:</strong></p>
+<p>Reading Excel files into R will remove all formatting, like:</p>
+<ul>
+<li>Highlighted and color-coded cells</li>
+<li>Font formatting, e.g.&nbsp;<strong>bold</strong> and <em>italics</em></li>
+<li>Borders, merged cells, formulas, and macros</li>
+</ul>
+<p>Some Excel users use formatting to represent information. For example, a user may use red, yellow, and green to represent a categorical variable like “low”, “medium”, and “high”, respectively. In such cases, create a new column to store these data.</p>
+</div>
+<p><br> <br></p>
+<p><strong>Excel Files in the Wild:</strong> It’s common to see Excel files with heavy formatting:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/excel_workbook.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>If R were to import this file, as is, what information would survive?</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<center>
+Source: <a href="https://legacy.cnyvitals.org/onondaga/civic-engagement/special-district-governments-2.html">Special District Governments, CNY Vitals Legacy</a>
+</center>
+<p><br> <br></p>
+</section>
+<section id="json-file-format" class="level3" data-number="13.4.3">
+<h3 data-number="13.4.3" class="anchored" data-anchor-id="json-file-format"><span class="header-section-number">13.4.3</span> JSON File Format</h3>
+<p>The <strong>JSON</strong> format stands for “JavaScript Object Notation”:</p>
+<ul>
+<li>JSON files use extension <code>.json</code></li>
+<li>Like TSV files, JSON files are concise and well-structured</li>
+<li>Also like TSV, JSON files are generally human-readable</li>
+<li>JSON structure differs across files and are read into R differently</li>
+<li>Packages like <code>jsonlite</code> help R read in <code>.json</code> files</li>
+</ul>
+<p><br></p>
+<p><strong>JSON Files in the Wild:</strong> Check out these <a href="https://www.kaggle.com/gunnvant/game-of-thrones-srt#season1.json">Game of Thrones subtitles</a> in JSON format:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/json_file.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>This JSON file has nested arrays, or sets of values within sets of values.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="statistical-software-formats" class="level3" data-number="13.4.4">
+<h3 data-number="13.4.4" class="anchored" data-anchor-id="statistical-software-formats"><span class="header-section-number">13.4.4</span> Statistical Software Formats</h3>
+<p>Each major statistical software has its own (sometimes proprietary) file format, e.g.:</p>
+<ul>
+<li><strong>SPSS</strong> uses extensions <code>.sav</code> and <code>.por</code></li>
+<li><strong>SAS</strong> uses extensions <code>.sas7bdat</code> and <code>.sas7bcat</code></li>
+<li><strong>STATA</strong> uses extension <code>.dta</code></li>
+</ul>
+<p><br></p>
+<p>Different packages exist for importing statistical software files, e.g.:</p>
+<ul>
+<li>Package <code>foreign</code>, created by R’s core team, supports many formats</li>
+<li>Package <code>haven</code>, created by Hadley Wickham, is faster but for fewer formats</li>
+</ul>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://imgs.xkcd.com/comics/norm_normal_file_format.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption>.NORM files do not exist.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<center>
+Source: <a href="https://xkcd.com/2116/">XKCD</a>
+</center>
+<p><br> <br></p>
+</section>
+<section id="rdata-format" class="level3" data-number="13.4.5">
+<h3 data-number="13.4.5" class="anchored" data-anchor-id="rdata-format"><span class="header-section-number">13.4.5</span> RData Format</h3>
+<p>You may have noticed, when working in R, that you’re asked to save your workspace.</p>
+<p>When saving a workspace, <code>.rdata</code> or <code>.rda</code> files are stored in the working directory.</p>
+<ul>
+<li>You can manually save part or all of your workspace with function <code>save()</code></li>
+<li>You can then load part or all of your workspace with function <code>load()</code></li>
+<li><code>.rdata</code> and <code>.rda</code> files store your session’s objects, command history, etc.</li>
+<li>If creating an object is computationally expensive, consider saving it!</li>
+</ul>
+<p><br> <br></p>
+</section>
+<section id="conclusions" class="level3" data-number="13.4.6">
+<h3 data-number="13.4.6" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">13.4.6</span> Conclusions</h3>
+<p>There are a variety of file formats that you can read into R.</p>
+<p>For virtually every file format, there are functions and packages to import them.</p>
+<p><strong>You must know the file’s format to decide on the best import function.</strong></p>
+<p><br> <br></p>
+</section>
+</section>
+<section id="key-functions-for-importing-data" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="key-functions-for-importing-data"><span class="header-section-number">13.5</span> Key Functions for Importing Data</h2>
+<p>Once you’ve identified the extension type, you should consider how to read it into R.</p>
+<ul>
+<li>Is it a flat or text file?</li>
+<li>What character delimits each value, e.g.&nbsp;<code>,</code>, <code>;</code>?</li>
+<li>Can you read it in using base R or do you need a new package?</li>
+<li>What other arguments should you specify to ensure success?</li>
+</ul>
+<p>We’ll look at a few common functions for importing common formats.</p>
+<p><br> <br></p>
+<section id="workhorses-wrapper-functions" class="level3" data-number="13.5.1">
+<h3 data-number="13.5.1" class="anchored" data-anchor-id="workhorses-wrapper-functions"><span class="header-section-number">13.5.1</span> Workhorses &amp; Wrapper Functions:</h3>
+<p>The <em>workhorse</em> of all base R reading functions is <code>read.table()</code>.</p>
+<p>Thanks to its modifiability, function <code>read.table()</code> is remarkably flexible.</p>
+<p>Not only does it import most file types, it’s used by many <a href="https://stat.ethz.ch/pipermail/r-help/2008-March/158393.html"><strong>wrapper functions</strong></a>.</p>
+<p><br></p>
+<div class="quiz">
+<p><strong>QUESTION</strong></p>
+<p>You can see whats under a function’s hood by typing it without <code>()</code>.</p>
+<p>Look at the internals of function <code>read.csv()</code>. What function is used?</p>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>read.csv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>function (file, header = TRUE, sep = ",", quote = "\"", dec = ".", 
+    fill = TRUE, comment.char = "", ...) 
+read.table(file = file, header = header, sep = sep, quote = quote, 
+    dec = dec, fill = fill, comment.char = comment.char, ...)
+&lt;bytecode: 0x0000018e2bd8b028&gt;
+&lt;environment: namespace:utils&gt;</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>A <a href="https://stat.ethz.ch/pipermail/r-help/2008-March/158393.html"><strong>wrapper function</strong></a> is a modified version of a more powerful and versatile function.</p>
+<p>Each is optimized for a specific task, like <code>read.csv()</code> - a very common function.</p>
+<p><strong>Wrapper functions</strong> are like customized tools. Their toolboxes are <strong>packages</strong>.</p>
+<p><br> <br></p>
+</section>
+</section>
+<section id="base-r-reading-csv-files" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="base-r-reading-csv-files"><span class="header-section-number">13.6</span> Base R: Reading CSV Files</h2>
+<p>Reading comma-separated values (CSV) files is done with base R’s <code>read.csv()</code> function.</p>
+<ul>
+<li>Only requires one argument: <code>path =</code></li>
+<li>Argument <code>path =</code> accepts the directory path or a web URL</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"~/dp4ss-textbook/my_data.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"http://www.ds4ps.com/textbook/my_data.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>We can read in <a href="http://data.syrgov.net/datasets/c15a39a8a00e48b1a60c826c8a2cb3e0_0">Syracuse, NY lead violations</a> directly from the city’s open data portal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' Put your URL in quotes; here, we name it "url"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#' Use function paste0() to join long strings of text</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://opendata.arcgis.com/datasets/"</span>, </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>              <span class="st">"c15a39a8a00e48b1a60c826c8a2cb3e0_0.csv"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>lead_data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> url,                  <span class="co"># Use object storing URL text</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)    <span class="co"># Always include this argument!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Now, we have a locally-stored dataset:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>lead_data[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]      <span class="co"># Bracks specify rows and columns to include</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Consider the following notable arguments for <code>read.csv()</code>:</p>
+<ul>
+<li><strong>file =</strong> takes a string of text, either a directory and file name or a URL</li>
+<li><strong>nrow =</strong> take a number, setting the limit of rows to read in</li>
+<li><strong>stringsAsFactors =</strong> converts text into categories (not cool!)</li>
+<li><strong>col.names =</strong> takes an array made with <code>c()</code> to rename variables</li>
+<li><strong>colClasses =</strong> also takes an array using <code>c()</code> to specify classes</li>
+</ul>
+<p><br> <br></p>
+<div class="tip">
+<p><strong>PRO TIP: READING FROM CLIPBOARDS</strong></p>
+<p>Why not read the data you’ve copied to your clipboard?</p>
+<p>In this approach, just change the first argument, <strong>file =</strong>, to “clipboard”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"clipboard"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="base-r-reading-tsv-other-delimited-formats" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="base-r-reading-tsv-other-delimited-formats"><span class="header-section-number">13.7</span> Base R: Reading TSV &amp; Other Delimited Formats</h2>
+<p>There are many ways to delimit data in a flat (text) file.</p>
+<p>For example, tab-delimited, semicolon-delimited, asterisk-delimited - you get it.</p>
+<p>In these instances, you can use function <code>read.delim()</code> to specify the delimiter.</p>
+<p><br></p>
+<p>Here, we specify the delimiter as a comma, <code>,</code>:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lead <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="at">file =</span> url, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sep =</span> <span class="st">','</span>)                   <span class="co"># Specifies delimiter</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>You can specify your delimiter as any character you wish:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read.delim</span>(<span class="at">file =</span> my_file, <span class="at">sep =</span> <span class="st">','</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.delim</span>(<span class="at">file =</span> my_file, <span class="at">sep =</span> <span class="st">';'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">read.delim</span>(<span class="at">file =</span> my_file, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)          <span class="co"># Tab-delimited</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>You can also read in any flat file, point-and-click, with RStudio’s import wizard:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/read_text_data.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Open the import wizard in the Environment pane.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>In the import wizard, you can specify arguments with a user-friendly interface.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/import_text_ui.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Click your way to victory!</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="package-readr-functions" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="package-readr-functions"><span class="header-section-number">13.8</span> Package “readr” Functions</h2>
+<p>The “readr” package improves on several functions in base R’s reading toolkit, e.g.:</p>
+<ul>
+<li>Built into RStudio</li>
+<li>All functions begin with <code>read_</code></li>
+<li>All functions have more consistent argument names</li>
+<li>Automatically sets <strong>stringsAsFactors =</strong> to FALSE</li>
+<li>Expanded, specialized functions for specific data types</li>
+<li>Enhances your data frame by converting it into a “tibble”</li>
+</ul>
+<p><br></p>
+<p>Observe the output from the “tibble” data frame. What’s different?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"https://opendata.arcgis.com/datasets/"</span>, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>              <span class="st">"c15a39a8a00e48b1a60c826c8a2cb3e0_0.csv"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<div class="tip">
+<p><strong>PRO TIP</strong></p>
+<p>Consider getting used to <strong>tibbles</strong> (enhanced data frames from “readr”).</p>
+<ul>
+<li>Tibbles print a lot more details about your data, e.g.&nbsp;variable classes</li>
+<li>They cooperate more easily with packages in the Rstudio ecosystem</li>
+<li>Also, they automatically truncate output to appear more organized</li>
+</ul>
+</div>
+<p><br></p>
+<div class="tip">
+<p><strong>ANOTHER PRO TIP</strong></p>
+<p>You can change variable classes much more easily in “readr” functions.</p>
+<p><strong>Short string representation</strong> allows you to specify classes with one character:</p>
+<ul>
+<li>“c” for character</li>
+<li>“d” for double</li>
+<li>“i” for integer</li>
+<li>“l” for logical</li>
+<li>“_” to exclude variable</li>
+</ul>
+<p>In a function, to specify 3 logical, 2 integer, and 4 character variables:</p>
+<p><code>read_csv(path = path, col_types = c("llliicccc"))</code></p>
+</div>
+<p><br> <br></p>
+</section>
+<section id="importing-excel-files" class="level2" data-number="13.9">
+<h2 data-number="13.9" class="anchored" data-anchor-id="importing-excel-files"><span class="header-section-number">13.9</span> Importing Excel Files</h2>
+<p>There are many packages available for reading in Excel’s <code>.xlsx</code> format.</p>
+<p>Package “readxl” is part of the same package ecosystem as “readr”.</p>
+<ul>
+<li>Allows new Excel-related functions, like <code>read_xlsx()</code></li>
+<li>Lists all sheets in a workbook with <code>excel_sheets()</code></li>
+<li>Specify certain sheets with argument <strong>sheet =</strong></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">read_xlsx</span>(<span class="at">path =</span> url, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">sheet =</span> <span class="st">"FY 2018 Revenue"</span>,    <span class="co"># Specify sheet</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">range =</span> <span class="st">"B3:G78"</span>,             <span class="co"># Specify range</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">trim_ws =</span> <span class="cn">TRUE</span>,               <span class="co"># Remove leading/trailing spaces</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">col_types =</span> <span class="st">"dcic_cli_cc"</span>)    <span class="co"># Specify variable classes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Of course, RStudio has macros set up if you’d prefer:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/excel_wizard.jpg" class="img-fluid figure-img" style="width:900.0%"></p>
+<figcaption>RStudio’s wizard for importing from Excel.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://i.giphy.com/media/Sb9KqeeymLlESGWZyE/giphy.webp" class="img-fluid figure-img" style="width:40.0%"></p>
+<figcaption>Excel at times.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<center>
+Source: <a href="https://www.reddit.com/r/gifs/comments/asanrg/nice_one_excel/"><em>Reddit</em></a>
+</center>
+<p><br> <br></p>
+<div class="tip">
+<p><strong>LIFE HACK</strong></p>
+<p>Using RStudio’s import wizard may seem like such a noob move.</p>
+<p>It is, but that doesn’t mean you can’t turn it into a clutch move.</p>
+<p><br></p>
+<p>Even when using wizards and macros, <strong>code will still run in the R console:</strong></p>
+<p><br></p>
+<p><em>Copy that code and throw it into your script. It’s often faster than typing.</em></p>
+</div>
+<p><br> <br></p>
+</section>
+<section id="importing-statistical-software-files" class="level2" data-number="13.10">
+<h2 data-number="13.10" class="anchored" data-anchor-id="importing-statistical-software-files"><span class="header-section-number">13.10</span> Importing Statistical Software Files</h2>
+<p>Two packages are commonly used to import files from SPSS, SAS, STATA and other software:</p>
+<ul>
+<li>Package “foreign” was developed by the R core team and highly versatile</li>
+<li>Package “haven” was developed by RStudio and only reads in SPSS, SAS, and STATA</li>
+</ul>
+<p><br></p>
+<p>Their differences are similar to those between base R and “readr” functions.</p>
+<ul>
+<li><code>read.dta()</code> is equivalent to <code>read_dta()</code> in the packages, respectively</li>
+<li><code>read.spss()</code> is equivalent to <code>read_spss()</code>, respectively</li>
+<li><code>read.stata()</code> is equavalent to <code>read_stata()</code>, and so on</li>
+</ul>
+<p><br> <br></p>
+</section>
+<section id="getting-data-off-of-the-web" class="level2" data-number="13.11">
+<h2 data-number="13.11" class="anchored" data-anchor-id="getting-data-off-of-the-web"><span class="header-section-number">13.11</span> Getting Data Off of the Web</h2>
+<p>There are a variety of methods to get data out of the web and into R.</p>
+<p>Here are a few popular methods:</p>
+<p><br> <br></p>
+<section id="retrieve-download-urls" class="level3" data-number="13.11.1">
+<h3 data-number="13.11.1" class="anchored" data-anchor-id="retrieve-download-urls"><span class="header-section-number">13.11.1</span> Retrieve Download URLs</h3>
+<p>Many times, it’s a matter of copying URLs from links that download datasets.</p>
+<p>Here, we find the “Download” button on a <a href="https://www.phoenixopendata.com/dataset/officer-involved-shooting-incidents">City Of Pheonix Open Data dataset</a>:</p>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/data_from_portals.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Open data portals make it easy to download data straight into R.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/data_from_portals2.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Right-click “Download” to copy the URL.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>You can save the URL in an object or use the whole string for the <strong>path =</strong> argument.</p>
+<p><br> <br></p>
+</section>
+<section id="retrieve-raw-data-urls" class="level3" data-number="13.11.2">
+<h3 data-number="13.11.2" class="anchored" data-anchor-id="retrieve-raw-data-urls"><span class="header-section-number">13.11.2</span> Retrieve Raw Data URLs</h3>
+<p>GitHub is riddled with datasets.</p>
+<p>You can often find a “Download” button for them.</p>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/github_data.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>The head of a table in GitHub’s data viewer.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>In the event that you cannot find a “Download” button, click on “Raw”.</p>
+<p>You can use the URL provided to read the data into R.</p>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="figures/github_raw.jpg" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>The raw CSV file, with the URL for reading into R.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+</section>
+<section id="further-resources" class="level2" data-number="13.12">
+<h2 data-number="13.12" class="anchored" data-anchor-id="further-resources"><span class="header-section-number">13.12</span> Further Resources</h2>
+<p>The following resources should help you further your knowledge on reading in data.</p>
+<ul>
+<li><a href="https://www.rdocumentation.org/packages/utils/versions/3.6.1/topics/read.table">Official R Documentation for Function <code>read.table()</code></a></li>
+<li><a href="https://cran.r-project.org/web/packages/readr/vignettes/readr.html">Introduction to Package “readr”</a></li>
+<li><a href="http://rpubs.com/JamisonCrawford/readingtextdata">“Reading Text Data” (Crawford, 2018)</a></li>
+<li><a href="https://peerj.com/preprints/3139v5.pdf">“How to Share Data for Collaboration” (Ellis &amp; Leek, 2017)</a></li>
+<li><a href="https://resources.rstudio.com/rstudio-cheatsheets/data-import-cheat-sheet">RStudio’s “Data Import Cheat Sheet”</a></li>
+</ul>
+<p><br> <br></p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./3_21-summary-stats.html" class="pagination-link" aria-label="Descriptive Statistics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Descriptive Statistics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./2_50-saving-objects.html" class="pagination-link" aria-label="Saving Data to File">
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Saving Data to File</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
