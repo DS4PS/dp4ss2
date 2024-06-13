@@ -53,7 +53,7 @@ h4 {
 }
 
 p a {
-  color: #153243;
+  color: maroon;
   font-weight: bold;
 }
 

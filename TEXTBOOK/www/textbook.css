@@ -230,32 +230,3 @@ div.sourceCode {
     margin-bottom: 40px;
 }
 
-
-
-.footer {
-  background-color:#726e6e;
-  height:100px;
-  color:white;
-  padding: 20px 3px 20px 3px;
-  position: absolute; 
-  min-width:100%;
-  max-width:100%;
-  margin:0px;
-  width:100%;
-}
-
-.footer {
-  background-color:#726e6e;
-  height:180px;
-  color:white; 
-  padding: 60px 3px 20px 3px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 100%;
-  margin-top:60px; 
-}
-
-.footer a{ color:orange; text-decoration:bold !important; } 
- 
- 

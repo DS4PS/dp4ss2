@@ -10,6 +10,8 @@ book:
     - "Jesse Lecy"
     - "Jamison Crawford"
   date: last-modified
+  repo-url: https://github.com/DS4PS/dp4ss
+  repo-actions: edit
   sidebar: 
     style: "docked" 
   chapters: 
