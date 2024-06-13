@@ -6,7 +6,7 @@ knitr::opts_chunk$set( echo = TRUE, message=F, warning=F, fig.width=8 )
 
 
 
-# Data Joins With **dplyr** 
+# Data Joins With dplyr 
 
 
 ```{r setup, include=TRUE}
