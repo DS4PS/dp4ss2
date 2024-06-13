@@ -15,7 +15,7 @@ book:
   chapters: 
     - index.qmd 
     
-    - part: 0_00-ds-toolkit.qmd 
+    - part: "The Data Science Toolkit" 
       chapters: 
       - 0_10-core-r.qmd 
       - 0_20-rstudio.qmd 

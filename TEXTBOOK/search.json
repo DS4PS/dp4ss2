@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "DP4SS",
     "section": "",
-    "text": "Introduction",
+    "text": "Introduction\n \n\n\nData Programming for the Social Sciences (DP4SS):\n\nA gentle introduction to data programming in R for social science audiences\n\n\n\n\n\nThis textbook consists of adapted lecture notes from a graduate level introductory course in data science that is offered at Arizona State University in the School of Public Affairs.\nIf you are interested in a career in data science check out the M.S. in Program Evaluation and Data Analytics at ASU.",
     "crumbs": [
       "Introduction"
     ]
@@ -2051,6 +2051,26 @@
     "crumbs": [
       "Getting Started",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Help</span>"
+    ]
+  },
+  {
+    "objectID": "index.html#data-programming-for-the-social-sciences-dp4ss",
+    "href": "index.html#data-programming-for-the-social-sciences-dp4ss",
+    "title": "DP4SS",
+    "section": "Data Programming for the Social Sciences (DP4SS):",
+    "text": "Data Programming for the Social Sciences (DP4SS):\nA gentle introduction to data programming in R for social science audiences.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#data-programming-for-the-social-sciences-dp4ss-a-gentle-introduction-to-data-programming-in-r-for-social-science-audiences",
+    "href": "index.html#data-programming-for-the-social-sciences-dp4ss-a-gentle-introduction-to-data-programming-in-r-for-social-science-audiences",
+    "title": "DP4SS",
+    "section": "Data Programming for the Social Sciences (DP4SS): A gentle introduction to data programming in R for social science audiences",
+    "text": "Data Programming for the Social Sciences (DP4SS): A gentle introduction to data programming in R for social science audiences",
+    "crumbs": [
+      "Introduction"
     ]
   }
 ]

@@ -6,40 +6,55 @@ engine: knitr
 
 
 
-::: polaroid
-![](figures/pitcher-dominance.png)
-:::
+
+<br>
+<br>
 
 
+<center>
+
+#### Data Programming for the Social Sciences (DP4SS): 
+
+> **A gentle introduction to data programming in R for social science audiences**
+
+
+</center>
+
+
+<br>
+<hr>
+<br> 
+
+This textbook consists of adapted lecture notes from a graduate level introductory course in data science that is offered at Arizona State University in the School of Public Affairs.
+
+
+If you are interested in a career in data science check out the [**M.S. in Program Evaluation and Data Analytics**](https://ds4ps.org/ms-prog-eval-data-analytics/courses/) at ASU. 
+
+
+<br>
+<hr>
+<br>
 
 
 
 <style>
 
-/* Three image containers (use 25% for four, and 50% for two, etc) */
-.column {
-  float: left;
-  width: 50%;
-  padding: 5px;
+h4 {
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    font-weight: bold;
+    font-size: 48px;
+    color: maroon;
+    line-height: 1.1em;
 }
 
-/* Clear floats after image containers */
-.row::after {
-  content: "";
-  clear: both;
-  display: table;
+.blockquote {
+    font-size: 28px;
+    color: maroon;
 }
 
-div.polaroid {
-  width: 100%;
-  background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-bottom: 25px;
-}
-
-div.container {
-  text-align: center;
-  padding: 10px 20px;
+p a {
+  color: maroon;
+  font-weight: bold;
 }
 
 </style>
