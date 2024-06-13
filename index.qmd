@@ -2,38 +2,38 @@
 engine: knitr
 ---
 
-# Introduction {.unnumbered} 
+# Introduction: {.unnumbered} 
 
-
-
-
-<br>
-<br>
 
 
 <center>
 
-#### Data Programming for the Social Sciences (DP4SS): 
+#### Data Programming for the Social Sciences (DP4SS) 
 
-> **A gentle introduction to data programming in R for social science audiences**
-
-
-</center>
+> **A gentle introduction**  
+> **to data programming in R**  
+> **for social science audiences** 
 
 
 <br>
 <hr>
 <br> 
 
-This textbook consists of adapted lecture notes from a graduate level introductory course in data science that is offered at Arizona State University in the School of Public Affairs.
+This textbook consists of adapted lecture notes  
+from a graduate level introductory course in data science that is   
+offered at Arizona State University in the School of Public Affairs.
 
 
-If you are interested in a career in data science check out the [**M.S. in Program Evaluation and Data Analytics**](https://ds4ps.org/ms-prog-eval-data-analytics/courses/) at ASU. 
+If you are interested in a career in data science check out the   
+[**M.S. in Program Evaluation and Data Analytics**](https://ds4ps.org/ms-prog-eval-data-analytics/courses/)   
+at ASU. 
 
 
 <br>
 <hr>
 <br>
+
+</center>
 
 
 
