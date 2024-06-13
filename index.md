@@ -1,12 +1,3 @@
-# DP4SS 
-
-
-
-<br>
-<br>
-
-
-  
 #### Data Programming for the Social Sciences (DP4SS)
 
 <br>
@@ -691,6 +682,454 @@ code {
   display: none;
   overflow: hidden;
 }
+
+
+
+
+  /* Reset Basic Elements
+ * ============================================== */
+    body, h1, h2, h3, h4, h5, h6,
+    p, blockquote, pre, hr,
+    dl, dd, ol, ul, figure {
+        margin: 0;
+        padding: 0;
+    }
+
+h1 { color: black; }
+    h2 {
+        color: #337ab7; // blue
+        font-weight:300;
+    } 
+
+/* Basic Styling
+ * ============================================== */
+    body {
+        font-family: $base-font-family;
+        font-size: $base-font-size;
+        line-height: $base-line-height;
+        font-weight: 300;
+        color: $text-color;
+        background-color: $background-color;
+        -webkit-text-size-adjust: 100%;
+    }
+
+/* Set Margin Bottom for Vertical Rhythm
+ * ============================================== */
+    h1, h2, h3, h4, h5, h6,
+    p, blockquote, pre,
+    ul, ol, dl, figure,
+    %vertical-rhythm {
+        margin-bottom: $spacing-unit / 2;
+    }
+
+/* Images and Figures
+ * ============================================== */
+    img {
+        max-width: 100%;
+        vertical-align: middle;
+    }
+
+    figure > img {
+        display: block;
+    }
+
+    figcaption {
+        font-size: $small-font-size;
+    }
+
+/* Lists
+ * ============================================== */
+    ul, ol {
+        margin-left: $spacing-unit;
+    }
+
+    li {
+        > ul,
+        > ol {
+             margin-bottom: 0;
+        }
+    }
+
+/* Headers
+ * ============================================== */
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: bold;
+        margin: 0px;
+    }
+
+    h1 {font-size: 1.9em !important;}
+    h2 {font-size:calc(2em + 0.25vw) !important; }  // font-size: 1.5em !important;}
+    h3 {font-size: 1.3em;}
+    h4 {font-size: 1em;}
+    h5 {font-size: .9em;}
+    h6 {font-size: .8em;}
+
+
+/* Links
+ * ============================================== */
+    a {
+        // color: darken($brand-color, 10%);
+        color: rgba(229,144,42,.7);
+        text-decoration: none;
+        font-weight: bold;
+        
+        &:hover {
+            color: darken($brand-color, 10%);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    }
+
+/* Block Quotes
+ * ============================================== */
+    blockquote {
+        color: #BBB;
+        border-left: 4px solid $brand-color;
+        padding-left: $spacing-unit / 2;
+        font-size: 17px;
+        letter-spacing: -1px;
+        // font-style: italic;
+
+        > :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+/* Code Blocks
+ * ============================================== */
+    pre,
+    code {
+        font-size: 13px;
+        border: 1px solid $grey-color-light;
+        font-family: Andale Mono, AndaleMono, monospace;
+    }
+
+    code {
+        padding: 1px 3px;
+        background-color: #FFF;
+        border-radius: 5px;
+        font-family: Andale Mono, AndaleMono, monospace;
+    }
+
+    pre {
+        border-radius: 3px;
+        padding: 8px 12px;
+        overflow-x: scroll;
+        background-color: #F5F5F5;
+
+        > code {
+            background-color: #F5F5F5;
+            border: 0;
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+
+/* Wrapper
+ * ============================================== */
+    .wrapper {
+        max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit} * 2));
+        max-width:         calc(#{$content-width} - (#{$spacing-unit} * 2));
+        margin-right: auto;
+        margin-left: auto;
+        padding-right: $spacing-unit;
+        padding-left: $spacing-unit;
+        @extend %clearfix;
+
+        @include media-query($on-laptop) {
+            max-width: -webkit-calc(#{$content-width} - (#{$spacing-unit}));
+            max-width:         calc(#{$content-width} - (#{$spacing-unit}));
+            padding-right: $spacing-unit / 2;
+            padding-left: $spacing-unit / 2;
+        }
+    }
+
+/* Clear Fix
+ * ============================================== */
+    %clearfix {
+
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    }
+
+/* TABLES
+ * =============================================== */
+    table {
+        border-collapse: collapse;
+        border-spacing: 0
+    }
+
+    :not(.highlight)>table {
+    margin: 0 auto 1.5em auto
+    }
+
+    :not(.highlight)>table tr {
+        background-color: #fff;
+        border-top: 1px solid #ccc
+    }
+
+    :not(.highlight)>table tr th, :not(.highlight)>table tr td {
+        padding: 6px 13px;
+        border: 1px solid #ddd
+    }
+
+    :not(.highlight)>table tr th {
+        font-weight: bold
+    }
+
+    :not(.highlight)>table tr:nth-child(2n) {
+        background-color: #f8f8f8
+    }
+
+/* Site Header
+ * ============================================== */
+    .site-header {
+        min-height: 450px;
+        background-color: $brand-color;
+        background-image: url('');
+        background-size: cover;
+        background-position: center -170px;
+        background-attachment: fixed;
+
+        @include media-query($on-palm) {
+            min-height: 250px;
+            background-position: center -250px;
+        }
+    }
+
+
+    .site-header a, a h1 {color: #FFF}; 
+    .site-header a:hover, a h1:hover {color: black}; 
+
+    .site-header h1 {
+        display: block;
+        font-size: 80px !important;
+        line-height: 80px;
+        letter-spacing: 3px;
+        text-align: center;
+        padding-top: 20px;
+        clear: both;
+        text-transform: uppercase;
+        font-family: 'Open Sans';
+
+        @include media-query($on-palm) {
+            font-size:60px !important;
+            letter-spacing: 0px;
+        }
+    }
+
+    .site-header span {
+        border: 10px solid #FFF;
+        padding: 0.3em 0.5em;
+        margin: 10px 20px;
+        display: inline-block;
+
+        @include media-query($on-palm) {
+            margin: 10px 10px;
+            padding: 0.15em 0.4em;
+        }
+    }
+
+
+    .site-nav {
+        // float: left;
+        line-height: 56px;
+        margin-left: 50px;
+        padding-bottom: 100px;
+
+        
+        .page-link {
+            line-height: $base-line-height;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+	    text-transform: uppercase;
+
+            &:not(:first-child) {
+                margin-left: 20px;
+            } 
+         }
+            
+
+
+        .page-link:hover {
+            opacity: 0.8;
+        }
+
+        @include media-query($on-palm) {
+            padding-bottom: 10px;
+        }
+    }
+
+/* Site Footer
+ * ============================================== */
+
+.footerFloatOuter {
+	width: 100%;
+	float: none;
+    }
+
+.footerFloatInner1 {
+	width: 100%;
+	float: none;
+        text-align: center;
+	margin-left: 10px;
+    }
+
+.footerFloatInner2 {
+	width: 100%;
+	float: none;
+        text-align: center;
+    }
+
+.footer {
+        min-height: 300px;
+        background-color: #696969;
+        padding-bottom: 3em;
+        padding-top: 6em;
+        margin: auto;
+	font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        font-size:calc(0.75em + 0.25vw) !important;
+        font-weight:300;
+        line-height:1.6 !important;
+        // font-size: 12px;
+        // font-family: Open Sans;
+        color: #FFF;
+	text-transform: uppercase;
+        // font-weight: bold;
+               
+        @media screen and (min-width: 800px) {
+            
+            .footerFloatInner1 {
+	          width: 20%;
+	          float: left;
+		  align: left;
+		  margin-left: 0px;
+            }
+            .footerFloatInner2 {
+	          width: 20%;
+	          float: left;
+		  text-align: left;
+            }
+		
+            .footerFloatOuter {
+	          width: 30%;
+	          float: left;
+            }      
+        } 
+}
+
+.footer ul li {
+	font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        font-size:calc(0.75em + 0.25vw) !important;
+        font-weight:300;
+        line-height:1.6 !important;
+        color: #FFF;
+	text-transform: uppercase;
+	// text-align: left;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+
+
+/* Individual Posts
+ * ============================================== */
+    .page-content {
+        padding: $spacing-unit 0;
+        text-align: justify;
+    }
+
+    .page-heading {
+        font-size: 20px;
+        padding-top: 2px;
+    }
+
+/* Archive
+ * ============================================== */
+    .post-list {
+        margin-left: 0;
+        list-style: none;
+
+        > li {
+            display: block;
+            padding: 0.1em 1.5em;
+        }
+
+    }
+
+    .post-link {
+        font-family: 'Open Sans';
+        font-weight: 300;
+        font-size: 1.5em;
+        letter-spacing: -1px;
+        color: #454545;
+        display: block;
+        width: 100%;
+
+        @include media-query($on-palm) {
+            font-size: 1.33em;
+        }
+    }
+
+    .post-meta {
+        font-size: $small-font-size;
+        color: $grey-color-light;
+        text-transform: uppercase;
+        display: inline-block;
+    }
+
+/* Post Format
+ * ============================================== */
+    .post-header {
+        margin-bottom: $spacing-unit;
+    }
+
+    .post-title {
+        font-size: 42px;
+        letter-spacing: -1px;
+        line-height: 1;
+
+        @include media-query($on-laptop) {
+            font-size: 36px;
+        }
+    }
+
+    .post-content {
+        margin-bottom: $spacing-unit;
+        /*
+        h2 {
+            font-size: 32px;
+
+            @include media-query($on-laptop) {
+                font-size: 28px;
+            }
+        }
+
+        h3 {
+            font-size: 26px;
+
+            @include media-query($on-laptop) {
+                font-size: 22px;
+            }
+        }
+
+        h4 {
+            font-size: 20px;
+
+            @include media-query($on-laptop) {
+                font-size: 18px;
+            }
+        } */
+    }
 
 </style>  
 
