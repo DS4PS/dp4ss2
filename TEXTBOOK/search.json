@@ -540,8 +540,8 @@
     "objectID": "1_10-getting-help.html#help",
     "href": "1_10-getting-help.html#help",
     "title": "5  Getting Help",
-    "section": "5.3 HELP!",
-    "text": "5.3 HELP!\nWhen I was younger, so much younger than today\nI never needed anybody’s help in any way\nBut now these days are gone, I’m not so self assured\nNow I find I’ve changed my mind and opened up the doors\n\nYour code is going to fail. A lot. Bugs and broken dreams code are a normal part of any programming task. They never go away, but you get better at diagnosing and fixed them!\nThe following is a brief taxonomy of errors in R, and some strategies to overcome them.",
+    "section": "5.2 HELP!",
+    "text": "5.2 HELP!\nYour code is going to fail. A lot. Bugs and broken dreams code are a normal part of any programming task. They never go away, but you get better at diagnosing and fixed them!\n\n\nHere There be ASCII Dragons\n\nThe following is a brief taxonomy of errors in R, and some strategies to overcome them.",
     "crumbs": [
       "Getting Started",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Help</span>"
@@ -551,8 +551,8 @@
     "objectID": "1_10-getting-help.html#what-does-it-mean-for-code-to-fail",
     "href": "1_10-getting-help.html#what-does-it-mean-for-code-to-fail",
     "title": "5  Getting Help",
-    "section": "5.4 What Does It Mean for Code to Fail?",
-    "text": "5.4 What Does It Mean for Code to Fail?\nTwo simple criteria must be met in order to recognize trouble with your code (Peng et al. 2017):\n\nYou expect your code to behave in a certain way\nYour code doesn’t behave as expected\n\nOftentimes, the best case scenario is that R will throw an error message. Error messages signal that R has encountered some fatal flaw in your code and, in consequence, nothing happens.\nThe next best scenario is that R will throw a warning message. Warning messages signal that R has successfully evaluated and executed code, but something unexpected happened, and R wants you to know about it.\n\n\nSource: Rex Analytics\n\n\nThe worst and most pernicious scenario is when your code runs perfectly fine, without error or warning messages, yet the output isn’t exactly what you’d wanted. If you recognize this, that’s great. If you don’t recognize this, errors flow downstream and can be difficult to detect and fix. Always inspect your output.\nOftentimes, users place too much emphasis on fixing their expected results and fail to consider their original expectations. Never neglect revisiting your expectations, as it’s possible that they, not your code, may explain an error (Peng et al. 2017).",
+    "section": "5.3 What Does It Mean for Code to Fail?",
+    "text": "5.3 What Does It Mean for Code to Fail?\nTwo simple criteria must be met in order to recognize trouble with your code (Peng et al. 2017):\n\nYou expect your code to behave in a certain way\nYour code doesn’t behave as expected\n\nOftentimes, the best case scenario is that R will throw an error message. Error messages signal that R has encountered some fatal flaw in your code and, in consequence, nothing happens.\nThe next best scenario is that R will throw a warning message. Warning messages signal that R has successfully evaluated and executed code, but something unexpected happened, and R wants you to know about it.\n\n\nSource: Rex Analytics\n\n\nThe worst and most pernicious scenario is when your code runs perfectly fine, without error or warning messages, yet the output isn’t exactly what you’d wanted. If you recognize this, that’s great. If you don’t recognize this, errors flow downstream and can be difficult to detect and fix. Always inspect your output.\nOftentimes, users place too much emphasis on fixing their expected results and fail to consider their original expectations. Never neglect revisiting your expectations, as it’s possible that they, not your code, may explain an error (Peng et al. 2017).",
     "crumbs": [
       "Getting Started",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Help</span>"
@@ -562,8 +562,8 @@
     "objectID": "1_10-getting-help.html#documentation",
     "href": "1_10-getting-help.html#documentation",
     "title": "5  Getting Help",
-    "section": "5.5 Documentation",
-    "text": "5.5 Documentation\nWhen you’re in a jam, the foremost strategy for resolving said jam is to read any relevant documentation.\n\n5.5.1 Built-In Documentation\nAll base R functions, as well as packages, functions, and datasets downloaded from CRAN (Comprehensive R Archie Network) contain documentation that can be accessed via the help() or ? functions.\nWhen called, the Help pane displays built-in documentation, which typically contains names, descriptions, templates, arguments, values, references, related objects, and examples.\nObserve the following calls to help() on function median():\n\nhelp(median)\n?median\n\n\n\n\n\n\nBuilt-in documentation is displayed with function help() and an object name.\n\n\n\n\n\n\n\n5.5.2 External Documentation\nDatasets found “in the wild” often have documentation containing metadata, variable definitions, and other helpful information, while many functions have external documentation outside of CRAN.\n\n\nDocumentation for RStudio’s “dplyr” Package\n\n\n\n\n\n\nMore stylized documentation on package dplyr from the Tidyverse website.\n\n\n\n\n\nDocumentation for the Pheonix Fire Department Data\n\n\n\n\n\n\nDocumentation on operational statistics data on the City of Phoenix Open Data portal.\n\n\n\n\n\n\n\n\n5.5.3 Vignettes\n\n“A vignette is like a book chapter or an academic paper: It can describe the problem that your package is designed to solve, and then show the reader how to solve it.” (Hadley Wickham)\n\nSome R packages have vignettes, or more comprehensive and thorough overviews than typical documentation. Vignettes are written for the express purpose of learning how to use a package. While vignettes are easy to find in a conventional search engine, you can open a vignette from within R by calling function browseVignettes() and a quotes package name. For example:\n\nbrowseVignettes(\"tidyr\")\n\n\n\n\n\n\nAvailable vignettes appear in your browser with browseVignettes()",
+    "section": "5.4 Documentation",
+    "text": "5.4 Documentation\nWhen you’re in a jam, the foremost strategy for resolving said jam is to read any relevant documentation.\n\n5.4.1 Built-In Documentation\nAll base R functions, as well as packages, functions, and datasets downloaded from CRAN (Comprehensive R Archie Network) contain documentation that can be accessed via the help() or ? functions.\nWhen called, the Help pane displays built-in documentation, which typically contains names, descriptions, templates, arguments, values, references, related objects, and examples.\nObserve the following calls to help() on function median():\n\nhelp(median)\n?median\n\n\n\n\n\n\nBuilt-in documentation is displayed with function help() and an object name.\n\n\n\n\n\n\n\n5.4.2 External Documentation\nDatasets found “in the wild” often have documentation containing metadata, variable definitions, and other helpful information, while many functions have external documentation outside of CRAN.\n\n\nDocumentation for RStudio’s “dplyr” Package\n\n\n\n\n\n\nMore stylized documentation on package dplyr from the Tidyverse website.\n\n\n\n\n\nDocumentation for the Pheonix Fire Department Data\n\n\n\n\n\n\nDocumentation on operational statistics data on the City of Phoenix Open Data portal.\n\n\n\n\n\n\n\n\n5.4.3 Vignettes\n\n“A vignette is like a book chapter or an academic paper: It can describe the problem that your package is designed to solve, and then show the reader how to solve it.” (Hadley Wickham)\n\nSome R packages have vignettes, or more comprehensive and thorough overviews than typical documentation. Vignettes are written for the express purpose of learning how to use a package. While vignettes are easy to find in a conventional search engine, you can open a vignette from within R by calling function browseVignettes() and a quotes package name. For example:\n\nbrowseVignettes(\"tidyr\")\n\n\n\n\n\n\nAvailable vignettes appear in your browser with browseVignettes()",
     "crumbs": [
       "Getting Started",
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Help</span>"
@@ -2040,6 +2040,17 @@
     "crumbs": [
       "Intro to Data Viz",
       "<span class='chapter-number'>23</span>  <span class='chapter-title'>The Grammar of Graphics</span>"
+    ]
+  },
+  {
+    "objectID": "1_10-getting-help.html#section",
+    "href": "1_10-getting-help.html#section",
+    "title": "5  Getting Help",
+    "section": "5.2 ",
+    "text": "5.2",
+    "crumbs": [
+      "Getting Started",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Getting Help</span>"
     ]
   }
 ]

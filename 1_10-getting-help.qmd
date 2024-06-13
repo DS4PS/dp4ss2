@@ -1,6 +1,14 @@
 # Getting Help
 
 
+<br> 
+
+  *When I was younger, so much younger than today*  
+  *I never needed anybody's help in any way*  
+  *But now these days are gone, I'm not so self assured*  
+  *Now I find I've changed my mind and opened up the doors* 
+  
+<br> 
 
 <div class="tip">
 
@@ -24,15 +32,7 @@ R has lots of resources for problem-shooting. You should familiarize yourself wi
 
 
 
-## *Here There be ASCII Dragons*
 
-
-![](figures/keyboard-dragon.jpg)
-
-
-```{r, eval=F, echo=F}
-![](https://writingdragonsblog.files.wordpress.com/2016/01/htbd.jpg?w=700)
-```
 
 
 
@@ -44,14 +44,11 @@ R has lots of resources for problem-shooting. You should familiarize yourself wi
 
 ## HELP! 
 
-  *When I was younger, so much younger than today*  
-  *I never needed anybody's help in any way*  
-  *But now these days are gone, I'm not so self assured*  
-  *Now I find I've changed my mind and opened up the doors*  
-
-<br>
-
 Your code is going to fail. A lot. Bugs and broken ~~dreams~~ code are a normal part of any programming task. They never go away, but you get better at diagnosing and fixed them!
+
+![](figures/keyboard-dragon.jpg)
+
+> **Here There be ASCII Dragons**
 
 The following is a brief taxonomy of errors in R, and some strategies to overcome them.
 
@@ -69,7 +66,7 @@ Oftentimes, the best case scenario is that R will throw an **error message**. Er
 The next best scenario is that R will throw a **warning message**. Warning messages signal that R has successfully evaluated and executed code, but something unexpected happened, and R wants you to know about it.
 
 
-![](http://rex-analytics.com/wp-content/uploads/2018/01/errors-in-R-739x1024.png)
+![](figures/errors-in-R.png)
 
 <center> Source: [Rex Analytics](http://rex-analytics.com) </center>
 
