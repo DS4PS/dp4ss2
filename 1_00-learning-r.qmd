@@ -105,7 +105,7 @@ Accepting these limitations is liberating. It allows one to focus on an *ab init
 > "I am always doing that which I cannot do, in order that I may learn how to do it."  ~ Pablo Picasso
 
 
-```{r picaso, echo=F, fig.align="center", out.width="60%"}
+```{r, echo=F, fig.align="center", out.width="60%"}
 
 knitr::include_graphics("figures/Picasso.jpg")
 
