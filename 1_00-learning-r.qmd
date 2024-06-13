@@ -105,7 +105,13 @@ Accepting these limitations is liberating. It allows one to focus on an *ab init
 > "I am always doing that which I cannot do, in order that I may learn how to do it."  ~ Pablo Picasso
 
 
-![](http://www.galleriesnow.net/wp-content/uploads/2019/05/Picasso.jpg)
+```{r picaso, echo=F, fig.align="center", out.width="60%"}
+
+knitr::include_graphics("figures/Picasso.jpg")
+
+```
+
+
 
 <center><h2> Nailed it  </h2></center>
 

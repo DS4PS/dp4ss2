@@ -64,7 +64,7 @@ div.datacamp-exercise .dcl-btn-primary {
   margin-bottom:40px;
 }
 
-.tip h2 { 
+.tip h2, .tip h3 { 
   color: #FFFFFF !important;
   margin-top:20px !important;
 }
@@ -145,11 +145,15 @@ img {
 }
 
 
+h1 {
+  color: #153243 !important;
+}
   
 h2,h3,h4,h5,h6{
   font-weight:300;
   margin-top:60px !important;
   margin-bottom:30px;
+  color: #153243 !important;
 }
   
 p.caption {
@@ -159,6 +163,9 @@ p.caption {
 }
 
 
+p a, li a, ul a {
+  color: darkgoldenrod;
+}
 
 body{
      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;

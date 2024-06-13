@@ -144,7 +144,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Introduction</span></a>
+ <span class="menu-text">Introduction:</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -1189,16 +1189,16 @@ X4-Y3</p>
 <span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>( x, y )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      x   y  
- [1,] "O" "L"
- [2,] "E" "A"
- [3,] "A" "M"
+ [1,] "M" "H"
+ [2,] "L" "K"
+ [3,] "G" "N"
  [4,] "C" "J"
- [5,] "G" "B"
- [6,] "M" "I"
- [7,] "H" "F"
- [8,] "I" "O"
- [9,] "D" "D"
-[10,] "K" "C"</code></pre>
+ [5,] "F" "D"
+ [6,] "I" "A"
+ [7,] "A" "L"
+ [8,] "O" "O"
+ [9,] "H" "M"
+[10,] "J" "E"</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>order.y <span class="ot">&lt;-</span> <span class="fu">match</span>( x, y )</span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1207,16 +1207,16 @@ X4-Y3</p>
 <span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>( x, y.new )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      x   y.new
- [1,] "O" "O"  
- [2,] "E" NA   
- [3,] "A" "A"  
- [4,] "C" "C"  
- [5,] "G" NA   
- [6,] "M" "M"  
- [7,] "H" NA   
- [8,] "I" "I"  
- [9,] "D" "D"  
-[10,] "K" NA   </code></pre>
+ [1,] "M" "M"  
+ [2,] "L" "L"  
+ [3,] "G" NA   
+ [4,] "C" NA   
+ [5,] "F" NA   
+ [6,] "I" NA   
+ [7,] "A" "A"  
+ [8,] "O" "O"  
+ [9,] "H" "H"  
+[10,] "J" "J"  </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note the result if you confuse the order or arguments</span></span>
 <span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1227,16 +1227,16 @@ X4-Y3</p>
 <span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>( x, y.new )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      x   y.new
- [1,] "O" NA   
- [2,] "E" "M"  
- [3,] "A" "I"  
- [4,] "C" NA   
- [5,] "G" NA   
- [6,] "M" "O"  
- [7,] "H" NA   
- [8,] "I" "L"  
- [9,] "D" "D"  
-[10,] "K" "J"  </code></pre>
+ [1,] "M" "M"  
+ [2,] "L" NA   
+ [3,] "G" NA   
+ [4,] "C" "E"  
+ [5,] "F" NA   
+ [6,] "I" "L"  
+ [7,] "A" "K"  
+ [8,] "O" "O"  
+ [9,] "H" "H"  
+[10,] "J" NA   </code></pre>
 </div>
 </div>
 <p>This comes in handy when we are matching information between two tables. For example, in GIS the map regions follow a specific order but your data does not. Create a color scheme for levels of your data, and then re-order the colors so they match the correct region on the map. In this example, we will look at unemployment levels by county.</p>

@@ -18,7 +18,7 @@ library( pander )
 
 <div class="tip">
 
-### Key Concepts
+## Key Concepts
 
 We can create highly-customized scatterplots by mastering a few arguments:
 
